@@ -9,16 +9,16 @@ dev_deps:
 	pip install -r requirements-dev.txt
 
 check-format: dev_deps
-	yapf -rd stopwatch/
+	yapf -rd statman/
 
 format: dev_deps
-	yapf -ri stopwatch/
+	yapf -ri statman/
 
 lint: check-format
-	pylint -r n stopwatch/
+	pylint -r n statman/
 
 lint-no-error: 
-	pylint --exit-zero -r n stopwatch/
+	pylint --exit-zero -r n statman/
 
 test: init dev_deps
 	python3 -m pytest -v
