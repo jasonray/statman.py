@@ -26,8 +26,8 @@ class TestStopwatch(unittest.TestCase):
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, 'sw')
 
-    def test_start_read_100ms(self):
-        test_time_s = 0.100
+    def test_start_read_250ms(self):
+        test_time_s = 0.250
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
@@ -40,8 +40,8 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
-    def test_autostart_read_100ms(self):
-        test_time_s = 0.100
+    def test_autostart_read_250ms(self):
+        test_time_s = 0.25
         stopwatch = Stopwatch(name='sw', autostart=True)
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
@@ -66,11 +66,25 @@ class TestStopwatch(unittest.TestCase):
         self.assertAlmostEqual(stopwatchA.read(), 0.6, delta=self._accepted_variance)
         self.assertAlmostEqual(stopwatchB.read(), 0.3, delta=self._accepted_variance)
 
-    def test_start__stop_read_1s(self):
-        test_time_s = 0.1
+    def test_start__stop_read(self):
+        test_time_s = 0.25
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         stopwatch.stop()
         time.sleep(test_time_s)
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+    def test_read_without_start_return_none(self):
+        stopwatch = Stopwatch(name='sw')
+        self.assertIsNone(stopwatch.read())
+
+    def test_two_stops_second_time(self):
+        test_time_s = 0.25
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        time.sleep(test_time_s)
+        stopwatch.stop()
         self.assertAlmostEqual(stopwatch.read(), test_time_s * 2, delta=self._accepted_variance)
