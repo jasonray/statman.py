@@ -20,7 +20,7 @@ lint: check-format
 lint-no-error: 
 	pylint --exit-zero -r n src
 
-test: build dev_deps
+test: init dev_deps
 	python3 -m pytest -v
 
 init: clean deps
