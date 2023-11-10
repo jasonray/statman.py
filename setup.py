@@ -12,7 +12,7 @@ setup(
     author_email='jayray.net@gmail.com',
     description='Collection of metrics collection tools, including simple stopwatch',
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
