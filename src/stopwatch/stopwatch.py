@@ -18,10 +18,10 @@ class Stopwatch():
     def start(self):
         self._start_time = time.time()
 
-    def stop(self) -> int:
+    def stop(self) -> float:
         self._stop_time = time.time()
 
-    def read(self) -> int:
+    def read(self) -> float:
         delta = None
         if self._start_time:
             stop_time = None
