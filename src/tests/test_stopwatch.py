@@ -46,6 +46,12 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
+    def test_stop_returns_time(self):
+        test_time_s = 0.25
+        stopwatch = Stopwatch(name='sw', autostart=True)
+        time.sleep(test_time_s)
+        self.assertAlmostEqual(stopwatch.stop(), test_time_s, delta=self._accepted_variance)
+
     def test_dual_stopwatches_names(self):
         stopwatchA = Stopwatch(name='a', autostart=False)
         stopwatchB = Stopwatch(name='b', autostart=False)
