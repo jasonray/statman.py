@@ -97,7 +97,7 @@ class TestStopwatch(unittest.TestCase):
 
     def test_start_delta(self):
         test_time_s = 0.250
-        stopwatch = Stopwatch(name='sw', delta=1)
+        stopwatch = Stopwatch(name='sw', initial_delta=1)
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s + 1, delta=self._accepted_variance)
