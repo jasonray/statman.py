@@ -9,16 +9,16 @@ dev_deps:
 	pip install -r requirements-dev.txt
 
 check-format: dev_deps
-	yapf -rd src
+	yapf -rd ./
 
 format: dev_deps
-	yapf -ri src
+	yapf -ri ./
 
 lint: check-format
-	pylint -r n src
+	pylint -r n ./
 
 lint-no-error: 
-	pylint --exit-zero -r n src
+	pylint --exit-zero -r n ./
 
 test: init dev_deps
 	python3 -m pytest -v
