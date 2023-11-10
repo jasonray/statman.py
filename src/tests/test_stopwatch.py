@@ -9,22 +9,22 @@ class TestStopwatch(unittest.TestCase):
     def test_create_with_no_params(self):
         stopwatch = Stopwatch()
         self.assertIsNotNone(stopwatch)
-        self.assertEqual(stopwatch.name,None)
+        self.assertEqual(stopwatch.name, None)
 
     def test_create_with_empty_string(self):
         stopwatch = Stopwatch("")
         self.assertIsNotNone(stopwatch)
-        self.assertEqual(stopwatch.name,"")
+        self.assertEqual(stopwatch.name, "")
 
     def test_create_with_name(self):
         stopwatch = Stopwatch('sw')
         self.assertIsNotNone(stopwatch)
-        self.assertEqual(stopwatch.name,'sw')
+        self.assertEqual(stopwatch.name, 'sw')
 
     def test_create_with_name_by_label(self):
         stopwatch = Stopwatch(name='sw')
         self.assertIsNotNone(stopwatch)
-        self.assertEqual(stopwatch.name,'sw')
+        self.assertEqual(stopwatch.name, 'sw')
 
     def test_start_read_100ms(self):
         test_time_s = 0.100
@@ -32,7 +32,7 @@ class TestStopwatch(unittest.TestCase):
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
-        
+
     def test_start_read_1s(self):
         test_time_s = 1
         stopwatch = Stopwatch(name='sw')
@@ -52,7 +52,6 @@ class TestStopwatch(unittest.TestCase):
 
         self.assertEqual(stopwatchA.name, 'a')
         self.assertEqual(stopwatchB.name, 'b')
-
 
     def test_dual_stopwatches_read(self):
         stopwatchA = Stopwatch(name='a', autostart=False)
