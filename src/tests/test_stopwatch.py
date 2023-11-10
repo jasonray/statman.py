@@ -39,3 +39,9 @@ class TestStopwatch(unittest.TestCase):
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+    def test_autostart_read_100ms(self):
+        test_time_s = 0.100
+        stopwatch = Stopwatch(name='sw', autostart=True)
+        time.sleep(test_time_s)
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)

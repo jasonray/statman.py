@@ -4,8 +4,10 @@ class Stopwatch():
     _name = None
     _start_time = None
 
-    def __init__(self, name=None):
+    def __init__(self, name=None, autostart=False):
         self._name = name
+        if autostart:
+            self.start()
 
     def read(self) -> int:
         return 0
