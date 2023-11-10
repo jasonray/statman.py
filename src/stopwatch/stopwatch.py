@@ -21,11 +21,13 @@ class Stopwatch():
     def stop(self) -> int:
         self._stop_time = time.time()
 
-    def read(self):
-        stop_time = None
-        if self._stop_time:
-            stop_time = self._stop_time
-        else:
-            stop_time = time.time()
-        delta = stop_time - self._start_time
+    def read(self) -> int:
+        delta = None
+        if self._start_time:
+            stop_time = None
+            if self._stop_time:
+                stop_time = self._stop_time
+            else:
+                stop_time = time.time()
+            delta = stop_time - self._start_time
         return delta
