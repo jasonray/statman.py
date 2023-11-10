@@ -1,6 +1,6 @@
 import unittest
 import time
-from src.stopwatch.stopwatch import Stopwatch
+from stopwatch.stopwatch import Stopwatch
 
 
 class TestStopwatch(unittest.TestCase):
