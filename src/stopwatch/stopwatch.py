@@ -5,9 +5,11 @@ class Stopwatch():
     _name = None
     _start_time = None
     _stop_time = None
+    _initial_delta = None
 
-    def __init__(self, name=None, autostart=False):
+    def __init__(self, name=None, autostart=False, initial_delta=None):
         self._name = name
+        self._initial_delta = initial_delta
         if autostart:
             self.start()
 
@@ -31,4 +33,7 @@ class Stopwatch():
             else:
                 stop_time = time.time()
             delta = stop_time - self._start_time
+
+            if self._initial_delta:
+                delta+=self._initial_delta
         return delta
