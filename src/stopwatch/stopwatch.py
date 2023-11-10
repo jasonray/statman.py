@@ -11,9 +11,6 @@ class Stopwatch():
         if autostart:
             self.start()
 
-    def read(self) -> int:
-        return 0
-
     @property
     def name(self) -> str:
         return self._name
