@@ -18,7 +18,7 @@ class Stopwatch():
     def start(self):
         self._start_time = time.time()
 
-    def stop(self):
+    def stop(self) -> int:
         self._stop_time = time.time()
 
     def read(self):
