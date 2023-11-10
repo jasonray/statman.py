@@ -1,5 +1,6 @@
 import time
 
+
 class Stopwatch():
     _name = None
     _start_time = None
@@ -12,11 +13,11 @@ class Stopwatch():
 
     def read(self) -> int:
         return 0
-    
+
     @property
     def name(self) -> str:
         return self._name
-    
+
     def start(self):
         self._start_time = time.time()
 
@@ -28,6 +29,6 @@ class Stopwatch():
         if self._stop_time:
             stop_time = self._stop_time
         else:
-            stop_time=time.time()
+            stop_time = time.time()
         delta = stop_time - self._start_time
         return delta
