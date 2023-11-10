@@ -1,6 +1,7 @@
 import unittest
 import time
-from stopwatch.stopwatch import Stopwatch
+import statman
+from statman.stopwatch import Stopwatch
 
 
 class TestStopwatch(unittest.TestCase):
@@ -131,3 +132,8 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.time(precision=0), 1, delta=self._accepted_variance)
         self.assertAlmostEqual(stopwatch.time(precision=1), 1.1, delta=self._accepted_variance)
+
+    def test_access_through_statman(self):
+        stopwatch = statman.Stopwatch()
+        self.assertIsNotNone(stopwatch)
+        self.assertEqual(stopwatch.name, None)
