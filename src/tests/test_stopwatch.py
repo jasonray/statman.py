@@ -101,3 +101,20 @@ class TestStopwatch(unittest.TestCase):
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s + 1, delta=self._accepted_variance)
+
+    def test_start_read_with_precision(self):
+        test_time_s = 0.3
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        self.assertAlmostEqual(stopwatch.read(precision=1),
+                               test_time_s,
+                               delta=self._accepted_variance)
+
+    def test_start_read_with_precision_1s(self):
+        test_time_s = 1.1
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        self.assertAlmostEqual(stopwatch.read(precision=0), 1, delta=self._accepted_variance)
+        self.assertAlmostEqual(stopwatch.read(precision=1), 1.1, delta=self._accepted_variance)

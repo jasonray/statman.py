@@ -24,7 +24,7 @@ class Stopwatch():
         self._stop_time = time.time()
         return self.read()
 
-    def read(self) -> float:
+    def read(self, precision=None) -> float:
         delta = None
         if self._start_time:
             stop_time = None
@@ -35,5 +35,8 @@ class Stopwatch():
             delta = stop_time - self._start_time
 
             if self._initial_delta:
-                delta+=self._initial_delta
+                delta += self._initial_delta
+
+            if not precision is None:
+                delta = round(delta, precision)
         return delta
