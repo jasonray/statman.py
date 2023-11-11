@@ -95,3 +95,16 @@ class TestStatman(unittest.TestCase):
 
         self.assertAlmostEqual(Statman.stopwatch('a').read(), 0.6, delta=self._accepted_variance)
         self.assertAlmostEqual(Statman.stopwatch('b').read(), 0.3, delta=self._accepted_variance)
+
+    def test_dual_stopwatches_read_with_get(self):
+        Statman.stopwatch(name='a', autostart=False)
+        Statman.stopwatch(name='b', autostart=False)
+
+        Statman.stopwatch('a').start()
+        time.sleep(0.3)
+
+        Statman.get('b').start()
+        time.sleep(0.3)
+
+        self.assertAlmostEqual(Statman.stopwatch('a').read(), 0.6, delta=self._accepted_variance)
+        self.assertAlmostEqual(Statman.get('b').read(), 0.3, delta=self._accepted_variance)
