@@ -8,6 +8,7 @@ class Stopwatch():
     _initial_delta = None
 
     def __init__(self, name=None, autostart=False, initial_delta=None):
+        self.reset()
         self._name = name
         self._initial_delta = initial_delta
         if autostart:
@@ -23,6 +24,14 @@ class Stopwatch():
     def stop(self, precision=None) -> float:
         self._stop_time = time.time()
         return self.read(precision=precision)
+
+    def reset(self):
+        self._start_time = None
+        self._stop_time = None
+
+    def restart(self):
+        self.reset()
+        self.start()
 
     def read(self, precision=None) -> float:
         delta = None
