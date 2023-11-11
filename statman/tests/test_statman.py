@@ -123,3 +123,12 @@ class TestStatman(unittest.TestCase):
 
         self.assertAlmostEqual(SM.stopwatch('a').read(), 0.6, delta=self._accepted_variance)
         self.assertAlmostEqual(SM.get('b').read(), 0.3, delta=self._accepted_variance)
+
+    def test_manually_registry(self):
+        from statman import Stopwatch
+        sw = Stopwatch()
+        Statman.register('sw',sw)
+        
+        Statman.get('sw').start()
+        time.sleep(1)
+        self.assertAlmostEqual(sw.read(), 1, delta=0.1)
