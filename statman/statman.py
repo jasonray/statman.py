@@ -13,7 +13,7 @@ class Statman():
         _registry.clear()
 
     @staticmethod
-    def registry_count():
+    def count():
         return len(_registry.keys())
 
     @staticmethod

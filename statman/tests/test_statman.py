@@ -60,25 +60,26 @@ class TestStatman(unittest.TestCase):
         self.assertIsNone(sw)
 
     def test_registry_count_0(self):
-        self.assertEqual(0,Statman.registry_count())
+        self.assertEqual(0,Statman.count())
     
     def test_registry_count_1(self):
         Statman.stopwatch('stopwatch-name')
-        self.assertEqual(1,Statman.registry_count())
+        self.assertEqual(1,Statman.count())
 
     def test_registry_count_2(self):
         Statman.stopwatch('stopwatch-name')
         Statman.stopwatch('stopwatch-name2')
-        self.assertEqual(2,Statman.registry_count())
+        self.assertEqual(2,Statman.count())
 
     def test_registry_count_duplicates(self):
         Statman.stopwatch('stopwatch-name')
         Statman.stopwatch('stopwatch-name')
         Statman.stopwatch('stopwatch-name2')
-        self.assertEqual(2,Statman.registry_count())
+        self.assertEqual(2,Statman.count())
 
     def test_registry_count_with_reset(self):
         Statman.stopwatch('stopwatch-name')
         Statman.reset()
         Statman.stopwatch('stopwatch-name2')
-        self.assertEqual(1,Statman.registry_count())
+        self.assertEqual(1,Statman.count())
+
