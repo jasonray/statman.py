@@ -18,7 +18,7 @@ class Statman():
 
     @staticmethod
     def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None) -> statman.Stopwatch:
-        ''' If there is an existing stopwatch with this name, return it.  If there is no existing stopwatch with this name, create a new instance and return it. '''
+        ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
         sw = Statman.get(name)
 
         if not sw:
