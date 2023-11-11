@@ -108,30 +108,30 @@ class TestStopwatch(unittest.TestCase):
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
-        self.assertAlmostEqual(stopwatch.read(precision=1), test_time_s, delta=self._accepted_variance)
+        self.assertEqual(stopwatch.read(precision=1), test_time_s)
 
     def test_start_read_with_precision_1s(self):
         test_time_s = 1.1
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
-        self.assertAlmostEqual(stopwatch.read(precision=0), 1, delta=self._accepted_variance)
-        self.assertAlmostEqual(stopwatch.read(precision=1), 1.1, delta=self._accepted_variance)
+        self.assertEqual(stopwatch.read(precision=0), 1)
+        self.assertEqual(stopwatch.read(precision=1), 1.1)
 
     def test_start_stop_with_precision(self):
         test_time_s = 0.3
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
-        self.assertAlmostEqual(stopwatch.stop(precision=1), test_time_s, delta=self._accepted_variance)
+        self.assertEqual(stopwatch.stop(precision=1), test_time_s)
 
-    def test_start_time(self):
+    def test_start_time_with_precision(self):
         test_time_s = 1.1
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
-        self.assertAlmostEqual(stopwatch.time(precision=0), 1, delta=self._accepted_variance)
-        self.assertAlmostEqual(stopwatch.time(precision=1), 1.1, delta=self._accepted_variance)
+        self.assertEqual(stopwatch.time(precision=0), 1)
+        self.assertEqual(stopwatch.time(precision=1), 1.1)
 
     def test_access_through_statman(self):
         stopwatch = statman.Stopwatch()
