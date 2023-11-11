@@ -60,13 +60,15 @@ statman=*
 * `start()` => starts the stopwatch, let the timing begin!
 
 ### Read
-* `read(precision)` => reads the stopwatch to determine how much time has elapsed.  Returns the time elapsed in seconds.
+* `read(units, precision)` => reads the stopwatch to determine how much time has elapsed.  Returns the time elapsed in seconds.
+  * The elapsed time will be returned based upon the `units` ('m' minutes, 's' seconds, 'ms', milliseconds).  Defaults to seconds.
   * If precision is provided, `read()` will round to the number of decimals places based on precision.
   * Note: `read` does NOT stop the stopwatch - if the stopwatch is runnning, it will continues to run.
-* `time(precision)` => alias for `read()`
+* `time(units, precision)` => alias for `read()`
 
 ### Stop
-* `stop()` => stops the stopwatch, and returns the time elapsed in seconds
+* `stop(units, precision)` => stops the stopwatch, and returns the time elapsed in seconds
+  * See read for the role of `units` and `precision`
 
 ### Reset
 * `reset()` => restores the stopwatch back to init state and clears start and stop times
