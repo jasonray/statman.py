@@ -41,6 +41,30 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
+    def test_start_read_units_s(self):
+        test_time_s = 1
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        delta = stopwatch.read(units='s', precision=1)
+        self.assertAlmostEqual(delta, 1, delta=self._accepted_variance)
+
+    def test_start_read_units_ms(self):
+        test_time_s = 1
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        delta = stopwatch.read(units='ms', precision=1)
+        self.assertTrue(990 <= delta <= 1010)
+
+    def test_start_read_units_min(self):
+        test_time_s = 3 * 60
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        delta = stopwatch.read(units='m', precision=1)
+        self.assertAlmostEqual(delta, 3, delta=self._accepted_variance)
+
     def test_autostart_read_250ms(self):
         test_time_s = 0.25
         stopwatch = Stopwatch(name='sw', autostart=True)
