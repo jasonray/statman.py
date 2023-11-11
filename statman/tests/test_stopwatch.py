@@ -57,13 +57,14 @@ class TestStopwatch(unittest.TestCase):
         delta = stopwatch.read(units='ms', precision=1)
         self.assertTrue(990 <= delta <= 1010)
 
-    def test_start_read_units_min(self):
-        test_time_s = 3 * 60
-        stopwatch = Stopwatch(name='sw')
-        stopwatch.start()
-        time.sleep(test_time_s)
-        delta = stopwatch.read(units='m', precision=1)
-        self.assertAlmostEqual(delta, 3, delta=self._accepted_variance)
+    # too expensive, need to look for mock time increment
+    # def test_start_read_units_min(self):
+    #     test_time_s = 3 * 60
+    #     stopwatch = Stopwatch(name='sw')
+    #     stopwatch.start()
+    #     time.sleep(test_time_s)
+    #     delta = stopwatch.read(units='m', precision=1)
+    #     self.assertAlmostEqual(delta, 3, delta=self._accepted_variance)
 
     def test_autostart_read_250ms(self):
         test_time_s = 0.25
@@ -156,6 +157,14 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         self.assertEqual(stopwatch.time(precision=0), 1)
         self.assertEqual(stopwatch.time(precision=1), 1.1)
+
+    def test_start_time_with_units(self):
+        test_time_s = 1
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        delta = stopwatch.time(units='ms', precision=1)
+        self.assertTrue(990 <= delta <= 1010)
 
     def test_access_through_statman(self):
         stopwatch = statman.Stopwatch()
