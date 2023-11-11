@@ -70,6 +70,12 @@ statman=*
 * `stop(units, precision)` => stops the stopwatch, and returns the time elapsed in seconds
   * See read for the role of `units` and `precision`
 
+### Reset
+* `reset()` => restores the stopwatch back to init state and clears start and stop times
+
+### Restart
+* `restart()` => `reset`s the stopwatch, then `start`s it
+
 ## Examples
 
 ### Maually Register Metric
