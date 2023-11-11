@@ -194,7 +194,7 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         stopwatch.stop()
         expected = '[sw => state:None; elapsed:0.2]'
-        self.assertEqual( str(stopwatch) , expected )
+        self.assertEqual(str(stopwatch), expected)
 
     def test_stopped_no_name_to_string(self):
         test_time_s = 0.2
@@ -203,4 +203,4 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         stopwatch.stop()
         expected = '[(Stopwatch) => state:None; elapsed:0.2]'
-        self.assertEqual( str(stopwatch) , expected )
+        self.assertEqual(str(stopwatch), expected)

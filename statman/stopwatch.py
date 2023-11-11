@@ -22,6 +22,9 @@ class Stopwatch():
         elapsed = self.read(precision=1, units="s")
         return f'[{name} => state:{state}; elapsed:{elapsed}]'
 
+    def print(self):
+        print(str(self))
+
     @property
     def name(self) -> str:
         return self._name
@@ -74,4 +77,4 @@ class Stopwatch():
         if self._stop_time:
             value = self.read(units=units, precision=precision)
         else:
-            value=None
+            value = None
