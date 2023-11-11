@@ -137,3 +137,35 @@ class TestStopwatch(unittest.TestCase):
         stopwatch = statman.Stopwatch()
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, None)
+
+    def test_start_then_restart(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+
+        stopwatch.restart()
+        time.sleep(test_time_s)
+
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+    def test_start_stop_then_restart(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        time.sleep(test_time_s)
+
+        stopwatch.restart()
+        time.sleep(test_time_s)
+
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+    def test_reset(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.reset()
+        self.assertIsNone(stopwatch.read())
