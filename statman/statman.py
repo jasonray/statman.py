@@ -10,10 +10,12 @@ class Statman():
 
     @staticmethod
     def reset():
+        '''Clears all metrics from the registry.'''
         _registry.clear()
 
     @staticmethod
     def count():
+        '''Returns a count of the registered metrics.'''
         return len(_registry.keys())
 
     @staticmethod
@@ -31,6 +33,7 @@ class Statman():
 
     @staticmethod
     def register(name, metric):
+        '''Manually register a new metric.'''
         _registry[name] = metric
 
     @staticmethod
