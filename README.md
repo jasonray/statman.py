@@ -75,8 +75,7 @@ statman=*
 from statman import Statman
 Statman.register('expensive-operation-timing',Stopwatch())
 
-Statman.get('expensive-operation-timing').start()
-time.sleep(1)
+stopwatch = Statman.get('expensive-operation-timing')
 ```
 
 ### Stopwatch via Registry
