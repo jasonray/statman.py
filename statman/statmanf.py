@@ -8,14 +8,14 @@ class StatmanC():
         pass
 
     @staticmethod    
-    def stopwatch(name=None) -> statman.StopwatchC:
+    def stopwatch(name=None) -> statman.Stopwatch:
         print('get/create sw', name)
         sw=None
         if name:
             sw=_registry.get(name)
         
         if not sw:
-            sw = statman.StopwatchC()
+            sw = statman.Stopwatch()
 
         if not name is None:
             _registry[name] = sw

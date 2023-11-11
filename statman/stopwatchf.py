@@ -1,7 +1,7 @@
 import time
 
 
-class StopwatchC():
+class Stopwatch():
     _name = None
     _start_time = None
     _stop_time = None

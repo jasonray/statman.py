@@ -5,15 +5,15 @@ from statman import StatmanC
 class TestStatman(unittest.TestCase):
 
     def test_create_stopwatch_directly(self):        
-        from statman import StopwatchC
-        sw=StopwatchC()
+        from statman import Stopwatch
+        sw=Stopwatch()
         sw.start()
         time.sleep(1)
         self.assertAlmostEqual(sw.read() , 1, delta=0.1)
 
     def test_create_stopwatch_via_statman_package(self):        
         import statman
-        sw=statman.StopwatchC()
+        sw=statman.Stopwatch()
         sw.start()
         time.sleep(1)
         self.assertAlmostEqual(sw.read() , 1, delta=0.1)
