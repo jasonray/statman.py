@@ -5,7 +5,7 @@ import pytest
 
 
 class TestStatman(unittest.TestCase):
-
+    _accepted_variance = 0.1
 
     @pytest.fixture(autouse=True)
     def run_before_and_after_tests(data):
@@ -83,3 +83,15 @@ class TestStatman(unittest.TestCase):
         Statman.stopwatch('stopwatch-name2')
         self.assertEqual(1,Statman.count())
 
+    def test_dual_stopwatches_read(self):
+        Statman.stopwatch(name='a', autostart=False)
+        Statman.stopwatch(name='b', autostart=False)
+
+        Statman.stopwatch('a').start()
+        time.sleep(0.3)
+
+        Statman.stopwatch('b').start()
+        time.sleep(0.3)
+
+        self.assertAlmostEqual(Statman.stopwatch('a').read(), 0.6, delta=self._accepted_variance)
+        self.assertAlmostEqual(Statman.stopwatch('b').read(), 0.3, delta=self._accepted_variance)
