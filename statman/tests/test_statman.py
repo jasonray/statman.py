@@ -127,8 +127,8 @@ class TestStatman(unittest.TestCase):
     def test_manually_registry(self):
         from statman import Stopwatch
         sw = Stopwatch()
-        Statman.register('sw',sw)
-        
+        Statman.register('sw', sw)
+
         Statman.get('sw').start()
         time.sleep(1)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
