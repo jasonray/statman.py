@@ -7,10 +7,10 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='statman',
-    version='0.0.8',
+    version='0.1.0',
     author='Mighty Pulpo',
     author_email='jayray.net@gmail.com',
-    description='Collection of metrics collection tools, including simple stopwatch',
+    description='Collection of metrics collection tools, including a simple stopwatch',
     long_description=long_description,
     long_description_content_type='text/markdown',
     packages=find_packages(),
