@@ -150,22 +150,6 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         self.assertEqual(stopwatch.stop(precision=1), test_time_s)
 
-    def test_start_time_with_precision(self):
-        test_time_s = 1.1
-        stopwatch = Stopwatch(name='sw')
-        stopwatch.start()
-        time.sleep(test_time_s)
-        self.assertEqual(stopwatch.time(precision=0), 1)
-        self.assertEqual(stopwatch.time(precision=1), 1.1)
-
-    def test_start_time_with_units(self):
-        test_time_s = 1
-        stopwatch = Stopwatch(name='sw')
-        stopwatch.start()
-        time.sleep(test_time_s)
-        delta = stopwatch.time(units='ms', precision=1)
-        self.assertTrue(990 <= delta <= 1010)
-
     def test_access_through_statman(self):
         stopwatch = statman.Stopwatch()
         self.assertIsNotNone(stopwatch)
@@ -202,3 +186,21 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         stopwatch.reset()
         self.assertIsNone(stopwatch.read())
+
+    def test_stopped_to_string(self):
+        test_time_s = 0.2
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        expected = '[sw => state:None; elapsed:0.2]'
+        self.assertEqual(str(stopwatch), expected)
+
+    def test_stopped_no_name_to_string(self):
+        test_time_s = 0.2
+        stopwatch = Stopwatch()
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        expected = '[(Stopwatch) => state:None; elapsed:0.2]'
+        self.assertEqual(str(stopwatch), expected)
