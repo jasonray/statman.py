@@ -14,6 +14,14 @@ class Stopwatch():
         if autostart:
             self.start()
 
+    def __str__(self):
+        state = None
+        name = self.name
+        if not name:
+            name = '(Stopwatch)'
+        elapsed = self.read(precision=1, units="s")
+        return f'[{name} => state:{state}; elapsed:{elapsed}]'
+
     @property
     def name(self) -> str:
         return self._name
@@ -61,5 +69,9 @@ class Stopwatch():
                 delta = round(delta, precision)
         return delta
 
-    def time(self, units: str = 's', precision: int = None) -> float:
-        return self.read(units=units, precision=precision)
+    def value(self, units: str = 's', precision: int = None) -> float:
+        value = None
+        if self._stop_time:
+            value = self.read(units=units, precision=precision)
+        else:
+            value=None
