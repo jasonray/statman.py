@@ -1,4 +1,4 @@
-import statman.stopwatchf
+import statman.stopwatch
 
 _registry = {}
 

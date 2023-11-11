@@ -1,7 +1,7 @@
 import unittest
 import time
 import statman
-from statman.stopwatchf import Stopwatch
+from statman.stopwatch import Stopwatch
 
 class TestStopwatch(unittest.TestCase):
     _accepted_variance = 0.1
