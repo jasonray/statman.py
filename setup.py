@@ -20,4 +20,5 @@ setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.6',
+    keywords='stats, metrics, stopwatch, timing'
 )
