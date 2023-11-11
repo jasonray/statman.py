@@ -1,7 +1,8 @@
 all: default
 
 clean: 
-
+	rm -rf dist/
+	
 deps:
 	pip install -r requirements.txt
 
