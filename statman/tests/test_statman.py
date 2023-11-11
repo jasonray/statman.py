@@ -1,6 +1,6 @@
 import unittest
 import time
-from statman import StatmanC
+from statman import Statman
 
 class TestStatman(unittest.TestCase):
 
@@ -19,23 +19,23 @@ class TestStatman(unittest.TestCase):
         self.assertAlmostEqual(sw.read() , 1, delta=0.1)
 
     def test_create_stopwatch_via_statman_constructor(self):        
-        sw=StatmanC.stopwatch()
+        sw=Statman.stopwatch()
         sw.start()
         time.sleep(1)
         self.assertAlmostEqual(sw.read() , 1, delta=0.1)
 
     def test_access_stopwatch_through_registry_get(self):        
-        StatmanC.stopwatch('stopwatch-name').start()
+        Statman.stopwatch('stopwatch-name').start()
         time.sleep(1)
 
-        sw = StatmanC.get('stopwatch-name')
+        sw = Statman.get('stopwatch-name')
         self.assertAlmostEqual(sw.read() , 1, delta=0.1)
 
     def test_access_stopwatch_through_registry_stopwatch(self):        
-        StatmanC.stopwatch('stopwatch-name').start()
+        Statman.stopwatch('stopwatch-name').start()
         time.sleep(1)
 
-        sw = StatmanC.stopwatch('stopwatch-name')
+        sw = Statman.stopwatch('stopwatch-name')
         self.assertAlmostEqual(sw.read() , 1, delta=0.1)
 
 

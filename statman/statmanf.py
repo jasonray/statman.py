@@ -2,7 +2,7 @@ import statman.stopwatch
 
 _registry = {}
 
-class StatmanC():
+class Statman():
 
     def __init__(self):
         pass
