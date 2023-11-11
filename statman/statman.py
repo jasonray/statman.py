@@ -17,11 +17,9 @@ class Statman():
         return len(_registry.keys())
 
     @staticmethod
-    def stopwatch(name=None, autostart=False, initial_delta=None) -> statman.Stopwatch:
-        print('get/create sw', name)
-        sw = None
-        if name:
-            sw = _registry.get(name)
+    def stopwatch(name: str =None , autostart: bool=False, initial_delta: float=None) -> statman.Stopwatch:
+        ''' If there is an existing stopwatch with this name, return it.  If there is no existing stopwatch with this name, create a new instance and return it. '''    
+        sw=Statman.get(name)
 
         if not sw:
             sw = statman.Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta)
