@@ -60,28 +60,28 @@ class TestStatman(unittest.TestCase):
         self.assertIsNone(sw)
 
     def test_registry_count_0(self):
-        self.assertEqual(0,Statman.count())
-    
+        self.assertEqual(0, Statman.count())
+
     def test_registry_count_1(self):
         Statman.stopwatch('stopwatch-name')
-        self.assertEqual(1,Statman.count())
+        self.assertEqual(1, Statman.count())
 
     def test_registry_count_2(self):
         Statman.stopwatch('stopwatch-name')
         Statman.stopwatch('stopwatch-name2')
-        self.assertEqual(2,Statman.count())
+        self.assertEqual(2, Statman.count())
 
     def test_registry_count_duplicates(self):
         Statman.stopwatch('stopwatch-name')
         Statman.stopwatch('stopwatch-name')
         Statman.stopwatch('stopwatch-name2')
-        self.assertEqual(2,Statman.count())
+        self.assertEqual(2, Statman.count())
 
     def test_registry_count_with_reset(self):
         Statman.stopwatch('stopwatch-name')
         Statman.reset()
         Statman.stopwatch('stopwatch-name2')
-        self.assertEqual(1,Statman.count())
+        self.assertEqual(1, Statman.count())
 
     def test_dual_stopwatches_read(self):
         Statman.stopwatch(name='a', autostart=False)
@@ -108,3 +108,18 @@ class TestStatman(unittest.TestCase):
 
         self.assertAlmostEqual(Statman.stopwatch('a').read(), 0.6, delta=self._accepted_variance)
         self.assertAlmostEqual(Statman.get('b').read(), 0.3, delta=self._accepted_variance)
+
+    def test_simplified_access(self):
+        from statman import Statman as SM
+
+        SM.stopwatch(name='a', autostart=False)
+        SM.stopwatch(name='b', autostart=False)
+
+        SM.stopwatch('a').start()
+        time.sleep(0.3)
+
+        SM.get('b').start()
+        time.sleep(0.3)
+
+        self.assertAlmostEqual(SM.stopwatch('a').read(), 0.6, delta=self._accepted_variance)
+        self.assertAlmostEqual(SM.get('b').read(), 0.3, delta=self._accepted_variance)

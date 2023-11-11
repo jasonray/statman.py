@@ -25,10 +25,19 @@ class Statman():
             sw = statman.Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta)
 
         if not name is None:
-            _registry[name] = sw
+            Statman.register(name,sw)
 
         return sw
 
     @staticmethod
+    def register(name, metric):
+        _registry[name] = metric
+
+
+    @staticmethod
     def get(name):
-        return _registry.get(name)
+        metric=None
+        if name:
+            metric= _registry.get(name)
+        return metric
+            
