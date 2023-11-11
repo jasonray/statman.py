@@ -68,6 +68,12 @@ statman=*
 ### Stop
 * `stop()` => stops the stopwatch, and returns the time elapsed in seconds
 
+### Reset
+* `reset()` => restores the stopwatch back to init state and clears start and stop times
+
+### Restart
+* `restart()` => `reset`s the stopwatch, then `start`s it
+
 ## Examples
 
 ### Maually Register Metric
