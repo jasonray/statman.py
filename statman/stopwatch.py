@@ -22,7 +22,7 @@ class Stopwatch():
 
     def stop(self, precision=None) -> float:
         self._stop_time = time.time()
-        return self.read()
+        return self.read(precision=precision)
 
     def read(self, precision=None) -> float:
         delta = None
