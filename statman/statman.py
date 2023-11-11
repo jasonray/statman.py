@@ -9,6 +9,14 @@ class Statman():
         pass
 
     @staticmethod
+    def reset():
+        _registry.clear()
+
+    @staticmethod
+    def registry_count():
+        return len(_registry.keys())
+
+    @staticmethod
     def stopwatch(name=None, autostart=False, initial_delta=None) -> statman.Stopwatch:
         print('get/create sw', name)
         sw = None
@@ -25,5 +33,4 @@ class Statman():
 
     @staticmethod
     def get(name):
-        print('get by name', name)
-        return _registry[name]
+        return _registry.get(name)
