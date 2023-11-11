@@ -1,1 +1,2 @@
-from .stopwatch import Stopwatch
+from .stopwatchf import StopwatchC
+from .statmanf import StatmanC
