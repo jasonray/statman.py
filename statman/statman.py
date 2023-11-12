@@ -1,4 +1,5 @@
 from .stopwatch import Stopwatch
+from .gauge import Gauge
 
 _registry = {}
 
@@ -30,6 +31,19 @@ class Statman():
             Statman.register(name, sw)
 
         return sw
+
+    @staticmethod
+    def gauge(name: str = None) -> Stopwatch:
+        ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
+        g = Statman.get(name)
+
+        if not g:
+            g = Gauge(name=name)
+
+        if not name is None:
+            Statman.register(name, g)
+
+        return g
 
     @staticmethod
     def register(name, metric):
