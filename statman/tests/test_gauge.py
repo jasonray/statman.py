@@ -103,3 +103,13 @@ class TestGauge(unittest.TestCase):
         gauge.value = 5
         expected = '[g => value=5]'
         self.assertEqual(str(gauge), expected)
+
+    def test_multiple_gauges(self):
+        gauge1 = Gauge('gauge1')
+        gauge2 = Gauge('gauge2')
+
+        gauge1.value = 1
+        gauge2.value = 2
+
+        self.assertEqual(gauge1.value, 1)
+        self.assertEqual(gauge2.value, 2)
