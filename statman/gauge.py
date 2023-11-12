@@ -15,9 +15,9 @@ class Gauge():
 
     @value.setter
     def value(self, value: float) -> float:
-        self._value=float(value)
+        self._value = float(value)
 
-    def increment(self, amount:int = 1) -> float:
+    def increment(self, amount: int = 1) -> float:
         self._value += amount
 
     def decrement(self, amount: int = 1) -> float:

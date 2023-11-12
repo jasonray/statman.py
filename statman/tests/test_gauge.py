@@ -3,6 +3,7 @@ from statman.gauge import Gauge
 
 
 class TestGauge(unittest.TestCase):
+
     def test_create_with_no_params(self):
         gauge = Gauge()
         self.assertIsNotNone(gauge)
@@ -40,4 +41,3 @@ class TestGauge(unittest.TestCase):
         gauge.value = 5
         gauge.decrement(2)
         self.assertEqual(gauge.value, 3)
-
