@@ -3,17 +3,17 @@ import time
 # import sys
 # import statmanP.stopwatchM
 # import statmanM
-from statmanP.stopwatchM import StopwatchC
+from statman.stopwatch import Stopwatch
 
 for i in range(0, 2):
-    iterations = 100000000
+    iterations = 100000
 
-    swt = StopwatchC('time.time', autostart=True)
+    swt = Stopwatch('time.time', autostart=True)
     for i in range(0, iterations):
         time.time()
     swt.stop()
     swt.print()
-    swpc = StopwatchC('time.perf_counter', autostart=True)
+    swpc = Stopwatch('time.perf_counter', autostart=True)
     for i in range(0, iterations):
         time.perf_counter()
     swpc.stop()

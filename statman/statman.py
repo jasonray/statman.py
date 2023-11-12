@@ -1,11 +1,11 @@
 # import statmanP.stopwatchM
 # import .stopwatchM
-from .stopwatchM import StopwatchC
+from .stopwatch import Stopwatch
 
 _registry = {}
 
 
-class StatmanC():
+class Statman():
 
     def __init__(self):
         pass
@@ -21,15 +21,15 @@ class StatmanC():
         return len(_registry.keys())
 
     @staticmethod
-    def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None) -> StopwatchC:
+    def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None) -> Stopwatch:
         ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
-        sw = StatmanC.get(name)
+        sw = Statman.get(name)
 
         if not sw:
-            sw = StopwatchC(name=name, autostart=autostart, initial_delta=initial_delta)
+            sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta)
 
         if not name is None:
-            StatmanC.register(name, sw)
+            Statman.register(name, sw)
 
         return sw
 
