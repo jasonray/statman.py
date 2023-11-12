@@ -73,6 +73,7 @@ class Stopwatch():
                 delta = round(delta, precision)
         return delta
 
+    @property
     def value(self, units: str = 's', precision: int = None) -> float:
         value = None
         if self._stop_time:

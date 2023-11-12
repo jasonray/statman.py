@@ -212,6 +212,6 @@ class TestStopwatch(unittest.TestCase):
         stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
-        self.assertIsNone(stopwatch.value())
+        self.assertIsNone(stopwatch.value)
         stopwatch.stop()
-        self.assertAlmostEqual(stopwatch.value(), test_time_s, delta=self._accepted_variance)
+        self.assertAlmostEqual(stopwatch.value, test_time_s, delta=self._accepted_variance)
