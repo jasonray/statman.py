@@ -1,5 +1,3 @@
-# import statmanP.stopwatchM
-# import .stopwatchM
 from .stopwatch import Stopwatch
 
 _registry = {}
