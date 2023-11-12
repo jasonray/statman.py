@@ -5,7 +5,6 @@ import time
 # import statmanM
 from statmanP.stopwatchM import StopwatchC
 
-
 for i in range(0, 2):
     iterations = 100000000
 
