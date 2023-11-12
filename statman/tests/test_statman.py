@@ -132,3 +132,20 @@ class TestStatman(unittest.TestCase):
         Statman.get('sw').start()
         time.sleep(1)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
+
+    def test_create_gauge_via_statman_package(self):
+        import statman
+        gauge = statman.Gauge()
+        gauge.value = 1
+        self.assertEqual(gauge.value, 1)
+
+    def test_access_gauge_through_registry(self):
+        g1 = Statman.gauge('g1')
+        g1.value = 1
+
+        Statman.gauge('g2').value = 2
+        Statman.gauge('g2').increment()
+
+        self.assertEqual(Statman.gauge('g1').name, 'g1')
+        self.assertEqual(Statman.gauge('g1').value, 1)
+        self.assertEqual(Statman.gauge('g2').value, 3)
