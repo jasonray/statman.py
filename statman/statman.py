@@ -33,12 +33,12 @@ class Statman():
         return sw
 
     @staticmethod
-    def gauge(name: str = None) -> Stopwatch:
+    def gauge(name=None, value: float = 0) -> Stopwatch:
         ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
         g = Statman.get(name)
 
         if not g:
-            g = Gauge(name=name)
+            g = Gauge(name=name, value=value)
 
         if not name is None:
             Statman.register(name, g)

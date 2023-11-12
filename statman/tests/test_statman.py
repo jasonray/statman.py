@@ -143,9 +143,13 @@ class TestStatman(unittest.TestCase):
         g1 = Statman.gauge('g1')
         g1.value = 1
 
-        Statman.gauge('g2').value = 2
-        Statman.gauge('g2').increment()
+        Statman.gauge(name='g2', value=2).increment()
+
+        Statman.gauge('g3')
+        Statman.gauge('g3').value = 20
+        Statman.gauge('g3').increment(10)
 
         self.assertEqual(Statman.gauge('g1').name, 'g1')
         self.assertEqual(Statman.gauge('g1').value, 1)
         self.assertEqual(Statman.gauge('g2').value, 3)
+        self.assertEqual(Statman.gauge('g3').value, 30)
