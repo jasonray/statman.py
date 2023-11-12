@@ -8,3 +8,8 @@ class TestGauge(unittest.TestCase):
         self.assertIsNotNone(g)
         self.assertEqual(g.name, None)
 
+    def test_create_with_name(self):
+        g = Gauge('g')
+        self.assertIsNotNone(g)
+        self.assertEqual(g.name, 'g')
+
