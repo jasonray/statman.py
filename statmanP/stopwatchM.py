@@ -81,4 +81,4 @@ class StopwatchC():
             value = None
 
     def _now(self):
-        return time.time()
+        return time.perf_counter()
