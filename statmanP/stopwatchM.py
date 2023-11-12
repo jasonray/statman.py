@@ -1,11 +1,12 @@
 import time
 
 
-class Stopwatch():
+class StopwatchC():
     _name = None
     _start_time = None
     _stop_time = None
     _initial_delta = None
+    _read_units = 'ms'
 
     def __init__(self, name=None, autostart=False, initial_delta=None):
         self.reset()
@@ -19,8 +20,8 @@ class Stopwatch():
         name = self.name
         if not name:
             name = '(Stopwatch)'
-        elapsed = self.read(precision=1, units="s")
-        return f'[{name} => state:{state}; elapsed:{elapsed}]'
+        elapsed = self.read(precision=0, units=self._read_units )
+        return f'[{name} => state:{state}; elapsed:{elapsed}{self._read_units}]'
 
     def print(self):
         print(str(self))
@@ -30,10 +31,10 @@ class Stopwatch():
         return self._name
 
     def start(self):
-        self._start_time = time.time()
+        self._start_time = self._now()
 
     def stop(self, units: str = 's', precision: int = None) -> float:
-        self._stop_time = time.time()
+        self._stop_time = self._now()
         return self.read(units=units, precision=precision)
 
     def reset(self):
@@ -51,7 +52,7 @@ class Stopwatch():
             if self._stop_time:
                 stop_time = self._stop_time
             else:
-                stop_time = time.time()
+                stop_time = self._now()
             delta = stop_time - self._start_time
 
             if self._initial_delta:
@@ -78,3 +79,6 @@ class Stopwatch():
             value = self.read(units=units, precision=precision)
         else:
             value = None
+
+    def _now(self):
+        return time.time()
