@@ -17,3 +17,9 @@ class TestGauge(unittest.TestCase):
         gauge.value = 5
         self.assertEqual(gauge.value, 5)
 
+    def test_increment(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        gauge.increment()
+        self.assertEqual(gauge.value, 6)
+
