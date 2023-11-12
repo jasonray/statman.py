@@ -17,3 +17,5 @@ class Gauge():
     def value(self, value) -> float:
         self._value=float(value)
 
+    def increment(self) -> float:
+        self._value += 1
