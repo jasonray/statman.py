@@ -22,7 +22,7 @@ class Gauge():
 
     @value.setter
     def value(self, value: float) -> float:
-        if value == None:
+        if value is None:
             value = 0
         self._value = value
 
