@@ -1,7 +1,7 @@
 import time
 
 
-class StopwatchC():
+class Stopwatch():
     _name = None
     _start_time = None
     _stop_time = None
@@ -20,7 +20,7 @@ class StopwatchC():
         name = self.name
         if not name:
             name = '(Stopwatch)'
-        elapsed = self.read(precision=0, units=self._read_units )
+        elapsed = self.read(precision=0, units=self._read_units)
         return f'[{name} => state:{state}; elapsed:{elapsed}{self._read_units}]'
 
     def print(self):

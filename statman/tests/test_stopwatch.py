@@ -1,49 +1,49 @@
 import unittest
 import time
-import statmanP
-from statmanP.stopwatchM import StopwatchC
+import statman
+from statman.stopwatch import Stopwatch
 
 
 class TestStopwatch(unittest.TestCase):
     _accepted_variance = 0.1
 
     def test_create_with_no_params(self):
-        stopwatch = StopwatchC()
+        stopwatch = Stopwatch()
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, None)
 
     def test_create_with_empty_string(self):
-        stopwatch = StopwatchC("")
+        stopwatch = Stopwatch("")
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, "")
 
     def test_create_with_name(self):
-        stopwatch = StopwatchC('sw')
+        stopwatch = Stopwatch('sw')
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, 'sw')
 
     def test_create_with_name_by_label(self):
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, 'sw')
 
     def test_start_read_250ms(self):
         test_time_s = 0.250
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
     def test_start_read_1s(self):
         test_time_s = 1
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
     def test_start_read_units_s(self):
         test_time_s = 1
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         delta = stopwatch.read(units='s', precision=1)
@@ -51,7 +51,7 @@ class TestStopwatch(unittest.TestCase):
 
     def test_start_read_units_ms(self):
         test_time_s = 1
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         delta = stopwatch.read(units='ms', precision=1)
@@ -68,26 +68,26 @@ class TestStopwatch(unittest.TestCase):
 
     def test_autostart_read_250ms(self):
         test_time_s = 0.25
-        stopwatch = StopwatchC(name='sw', autostart=True)
+        stopwatch = Stopwatch(name='sw', autostart=True)
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
     def test_stop_returns_time(self):
         test_time_s = 0.25
-        stopwatch = StopwatchC(name='sw', autostart=True)
+        stopwatch = Stopwatch(name='sw', autostart=True)
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.stop(), test_time_s, delta=self._accepted_variance)
 
     def test_dual_stopwatches_names(self):
-        stopwatchA = StopwatchC(name='a', autostart=False)
-        stopwatchB = StopwatchC(name='b', autostart=False)
+        stopwatchA = Stopwatch(name='a', autostart=False)
+        stopwatchB = Stopwatch(name='b', autostart=False)
 
         self.assertEqual(stopwatchA.name, 'a')
         self.assertEqual(stopwatchB.name, 'b')
 
     def test_dual_stopwatches_read(self):
-        stopwatchA = StopwatchC(name='a', autostart=False)
-        stopwatchB = StopwatchC(name='b', autostart=False)
+        stopwatchA = Stopwatch(name='a', autostart=False)
+        stopwatchB = Stopwatch(name='b', autostart=False)
 
         stopwatchA.start()
         time.sleep(0.3)
@@ -100,7 +100,7 @@ class TestStopwatch(unittest.TestCase):
 
     def test_start_stop_read(self):
         test_time_s = 0.25
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         stopwatch.stop()
@@ -108,12 +108,12 @@ class TestStopwatch(unittest.TestCase):
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
     def test_read_without_start_return_none(self):
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         self.assertIsNone(stopwatch.read())
 
     def test_two_stops_second_time(self):
         test_time_s = 0.25
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         stopwatch.stop()
@@ -123,21 +123,21 @@ class TestStopwatch(unittest.TestCase):
 
     def test_start_delta(self):
         test_time_s = 0.250
-        stopwatch = StopwatchC(name='sw', initial_delta=1)
+        stopwatch = Stopwatch(name='sw', initial_delta=1)
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s + 1, delta=self._accepted_variance)
 
     def test_start_read_with_precision(self):
         test_time_s = 0.3
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertEqual(stopwatch.read(precision=1), test_time_s)
 
     def test_start_read_with_precision_1s(self):
         test_time_s = 1.1
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertEqual(stopwatch.read(precision=0), 1)
@@ -145,19 +145,19 @@ class TestStopwatch(unittest.TestCase):
 
     def test_start_stop_with_precision(self):
         test_time_s = 0.3
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         self.assertEqual(stopwatch.stop(precision=1), test_time_s)
 
     def test_access_through_statman(self):
-        stopwatch = statmanP.StopwatchC()
+        stopwatch = statman.Stopwatch()
         self.assertIsNotNone(stopwatch)
         self.assertEqual(stopwatch.name, None)
 
     def test_start_then_restart(self):
         test_time_s = 0.250
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
 
@@ -168,7 +168,7 @@ class TestStopwatch(unittest.TestCase):
 
     def test_start_stop_then_restart(self):
         test_time_s = 0.250
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         stopwatch.stop()
@@ -181,7 +181,7 @@ class TestStopwatch(unittest.TestCase):
 
     def test_reset(self):
         test_time_s = 0.250
-        stopwatch = StopwatchC(name='sw')
+        stopwatch = Stopwatch(name='sw')
         stopwatch.start()
         time.sleep(test_time_s)
         stopwatch.reset()
