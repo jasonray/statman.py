@@ -1,8 +1,4 @@
 import time
-# from statman.stopwatch import Stopwatch
-# import sys
-# import statmanP.stopwatchM
-# import statmanM
 from statman.stopwatch import Stopwatch
 
 for i in range(0, 2):
