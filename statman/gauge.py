@@ -4,6 +4,7 @@ class Gauge():
 
     def __init__(self, name=None):
         self._name = name
+        self.value=0
 
     @property
     def name(self) -> str:
