@@ -206,3 +206,12 @@ class TestStopwatch(unittest.TestCase):
     #     stopwatch.stop()
     #     expected = '[(Stopwatch) => state:None; elapsed:200ms]'
     #     self.assertEqual(str(stopwatch), expected)
+
+    def test_value(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        self.assertIsNone(stopwatch.value())
+        stopwatch.stop()
+        self.assertAlmostEqual(stopwatch.value(), test_time_s, delta=self._accepted_variance)

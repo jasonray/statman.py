@@ -79,6 +79,7 @@ class Stopwatch():
             value = self.read(units=units, precision=precision)
         else:
             value = None
+        return value
 
     def _now(self):
         return time.perf_counter()
