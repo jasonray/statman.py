@@ -24,6 +24,18 @@ class TestGauge(unittest.TestCase):
         gauge.increment()
         self.assertEqual(gauge.value, 6)
 
+    def test_increment_none_value(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        gauge.increment(amount=None)
+        self.assertEqual(gauge.value, 6)
+
+    def test_increment_zero_value(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        gauge.increment(amount=0)
+        self.assertEqual(gauge.value, 5)
+
     def test_increment_2(self):
         gauge = Gauge('g')
         gauge.value = 5
@@ -35,6 +47,18 @@ class TestGauge(unittest.TestCase):
         gauge.value = 5
         gauge.decrement()
         self.assertEqual(gauge.value, 4)
+
+    def test_decrement_none_value(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        gauge.decrement(amount=None)
+        self.assertEqual(gauge.value, 4)
+
+    def test_decrement_zero_value(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        gauge.decrement(amount=0)
+        self.assertEqual(gauge.value, 5)
 
     def test_decrement_2(self):
         gauge = Gauge('g')
