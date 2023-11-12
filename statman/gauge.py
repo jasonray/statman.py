@@ -6,6 +6,12 @@ class Gauge():
         self._name = name
         self.value = 0
 
+    def __str__(self):
+        name = self.name
+        if not name:
+            name = '(Gauge)'
+        return f'[{name} => value={self.value}]'
+
     @property
     def name(self) -> str:
         return self._name
@@ -16,7 +22,9 @@ class Gauge():
 
     @value.setter
     def value(self, value: float) -> float:
-        self._value = float(value)
+        if value == None:
+            value = 0
+        self._value = value
 
     def increment(self, amount: int = 1) -> float:
         if amount is None:

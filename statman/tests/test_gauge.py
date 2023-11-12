@@ -16,7 +16,29 @@ class TestGauge(unittest.TestCase):
     def test_create_with_name(self):
         gauge = Gauge('g')
         gauge.value = 5
+
+    def test_value(self):
+        gauge = Gauge('g')
+        gauge.value = 5
         self.assertEqual(gauge.value, 5)
+
+    def test_value_init_0(self):
+        gauge = Gauge('g')
+        self.assertEqual(gauge.value, 0)
+
+    def test_value_multiple(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        self.assertEqual(gauge.value, 5)
+        gauge.value = 6
+        self.assertEqual(gauge.value, 6)
+
+    def test_set_value_to_none_resets_to_0(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        self.assertEqual(gauge.value, 5)
+        gauge.value = None
+        self.assertEqual(gauge.value, 0)
 
     def test_increment(self):
         gauge = Gauge('g')
@@ -75,3 +97,9 @@ class TestGauge(unittest.TestCase):
         gauge = Gauge('g')
         gauge.increment()
         self.assertEqual(gauge.value, 1)
+
+    def test_to_string(self):
+        gauge = Gauge('g')
+        gauge.value = 5
+        expected = '[g => value=5]'
+        self.assertEqual(str(gauge), expected)
