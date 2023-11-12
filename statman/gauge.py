@@ -4,7 +4,7 @@ class Gauge():
 
     def __init__(self, name=None):
         self._name = name
-        self.value=0
+        self.value = 0
 
     @property
     def name(self) -> str:
@@ -19,12 +19,11 @@ class Gauge():
         self._value = float(value)
 
     def increment(self, amount: int = 1) -> float:
-        if  amount is None:
+        if amount is None:
             amount = 1
         self._value += amount
 
-
     def decrement(self, amount: int = 1) -> float:
-        if  amount is None:
+        if amount is None:
             amount = 1
         self._value -= amount
