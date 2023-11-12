@@ -17,6 +17,12 @@ class TestGauge(unittest.TestCase):
         gauge = Gauge('g')
         gauge.value = 5
 
+    def test_initial_value(self):
+        gauge = Gauge('g', 5)
+        self.assertEqual(gauge.value, 5)
+        gauge.value = 10
+        self.assertEqual(gauge.value, 10)
+
     def test_value(self):
         gauge = Gauge('g')
         gauge.value = 5

@@ -2,9 +2,9 @@ class Gauge():
     _name = None
     _value = None
 
-    def __init__(self, name=None):
+    def __init__(self, name=None, value: float = 0):
         self._name = name
-        self.value = 0
+        self.value = value
 
     def __str__(self):
         name = self.name
