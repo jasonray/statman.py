@@ -20,12 +20,7 @@ class History():
         self._data.append(event)
 
     def create_event(self, dt, value):
-        event = {}
-        if isinstance(dt, str):
-            dt = datetime.datetime.strptime(dt, '%m/%d/%Y %H:%M:%S')
-        event['dt'] = dt
-        event['value'] = value
-        return event
+        return Event(dt,value)
 
     def count(self):
         return len(self._data)
@@ -34,7 +29,7 @@ class History():
         return self._data
 
     def values(self):
-        return [event['value'] for event in self.events()]
+        return [event.value for event in self.events()]
 
     def max_value(self):
         return reduce(lambda x, y: x if x > y else y, self.values())
@@ -52,3 +47,21 @@ class History():
     def median_value(self):
         # return self.sum_value() / self.count()
         return statistics.median(self.values())
+
+class Event():
+    _dt = None
+    _value = None
+
+    def __init__(self, dt, value):
+        if isinstance(dt, str):
+            dt = datetime.datetime.strptime(dt, '%m/%d/%Y %H:%M:%S')
+        self._dt = dt
+        self._value = value
+
+    @property
+    def dt(self):
+        return self._dt
+
+    @property
+    def value(self):
+        return self._value
