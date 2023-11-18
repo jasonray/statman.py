@@ -37,6 +37,9 @@ class History():
     def min_value(self):
         return reduce(lambda x, y: x if x < y else y, self.values())
 
+    def tota(self):
+        return self.sum_value()
+
     def sum_value(self):
         return reduce(lambda x, y: x + y, self.values())
 
