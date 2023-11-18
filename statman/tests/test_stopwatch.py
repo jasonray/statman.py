@@ -253,7 +253,7 @@ class TestStopwatch(unittest.TestCase):
         self.assertAlmostEqual(stopwatch.read(), test_time_s * 2, delta=self._accepted_variance)
 
         stopwatch.start()
-        print('read',stopwatch.read())
+        print('read', stopwatch.read())
         time.sleep(test_time_s)
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
 
@@ -270,7 +270,6 @@ class TestStopwatch(unittest.TestCase):
         time.sleep(test_time_s)
         stopwatch.stop()
         self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
-
 
     # def test_variance(self):
     #     number_of_events = 1000000
