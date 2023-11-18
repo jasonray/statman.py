@@ -242,3 +242,46 @@ class TestStopwatch(unittest.TestCase):
         self.assertIsNone(stopwatch.value)
         stopwatch.stop()
         self.assertAlmostEqual(stopwatch.value, test_time_s, delta=self._accepted_variance)
+
+    def test_history_start_stop_start_read(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw', enable_history=False)
+
+        stopwatch.start()
+        time.sleep(test_time_s * 2)
+        stopwatch.stop()
+        self.assertAlmostEqual(stopwatch.read(), test_time_s * 2, delta=self._accepted_variance)
+
+        stopwatch.start()
+        print('read',stopwatch.read())
+        time.sleep(test_time_s)
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+    def test_history_each_start_stop_indepedent(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw', enable_history=True)
+
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        self.assertAlmostEqual(stopwatch.read(), test_time_s, delta=self._accepted_variance)
+
+
+    # def test_variance(self):
+    #     number_of_events = 1000000
+
+    #     sw = Stopwatch(enable_history=True)
+    #     for i in range(0, number_of_events):
+    #         sw.start()
+    #         sw.stop()
+
+    #     print('number of measurements:', sw.history.count())
+    #     print('min:', sw.history.min_value())
+    #     print('max:', sw.history.max_value())
+    #     print('ave:', sw.history.average_value())
+    #     print('mode:', sw.history.mode_value())
