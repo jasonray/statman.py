@@ -1,4 +1,3 @@
-import time
 import datetime
 import statistics
 from functools import reduce
