@@ -1,4 +1,5 @@
 import time
+from statman.history import History
 
 
 class Stopwatch():
@@ -7,11 +8,14 @@ class Stopwatch():
     _stop_time = None
     _initial_delta = None
     _read_units = 'ms'
+    _history = None
 
-    def __init__(self, name=None, autostart=False, initial_delta=None):
+    def __init__(self, name=None, autostart=False, initial_delta=None, enable_history=False):
         self.reset()
         self._name = name
         self._initial_delta = initial_delta
+        if enable_history:
+            self._history = History()
         if autostart:
             self.start()
 
@@ -35,6 +39,10 @@ class Stopwatch():
 
     def stop(self, units: str = 's', precision: int = None) -> float:
         self._stop_time = self._now()
+
+        if self.history:
+            self.history.append(value=self._stop_time)
+
         return self.read(units=units, precision=precision)
 
     def reset(self):
@@ -72,6 +80,10 @@ class Stopwatch():
             if not precision is None:
                 delta = round(delta, precision)
         return delta
+
+    @property
+    def history(self) -> History:
+        return self._history
 
     @property
     def value(self, units: str = 's', precision: int = None) -> float:
