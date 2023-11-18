@@ -1,8 +1,5 @@
-import time
 import datetime
 import unittest
-import random
-from statman import Statman
 from statman.history import History
 
 
