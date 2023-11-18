@@ -187,6 +187,33 @@ class TestStopwatch(unittest.TestCase):
         stopwatch.reset()
         self.assertIsNone(stopwatch.read())
 
+    def test_stopwatch_history_off_by_default(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw')
+        self.assertIsNone(stopwatch.history)
+        stopwatch.start()
+        stopwatch.stop()
+        self.assertIsNone(stopwatch.history)
+
+    def test_stopwatch_history_enabled(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw', enable_history=True)
+        self.assertIsNotNone(stopwatch.history)
+        stopwatch.start()
+        stopwatch.stop()
+        self.assertIsNotNone(stopwatch.history)
+
+    def test_stopwatch_history_entries_created(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw', enable_history=True)
+        stopwatch.start()
+        stopwatch.stop()
+        stopwatch.start()
+        stopwatch.stop()
+        stopwatch.start()
+        stopwatch.stop()
+        self.assertEqual(len(stopwatch.history.values()), 3)
+
     # re-enable after mock of time increment
     # def test_stopped_to_string(self):
     #     test_time_s = 0.2
