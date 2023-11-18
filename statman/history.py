@@ -20,7 +20,7 @@ class History():
         self._data.append(event)
 
     def create_event(self, dt, value):
-        return Event(dt,value)
+        return Event(dt, value)
 
     def count(self):
         return len(self._data)
@@ -48,12 +48,19 @@ class History():
         # return self.sum_value() / self.count()
         return statistics.median(self.values())
 
+    def mode_value(self):
+        # return self.sum_value() / self.count()
+        return statistics.mode(self.values())
+
+
 class Event():
     _dt = None
     _value = None
 
     def __init__(self, dt, value):
-        if isinstance(dt, str):
+        if not dt:
+            dt = datetime.datetime.now()
+        elif isinstance(dt, str):
             dt = datetime.datetime.strptime(dt, '%m/%d/%Y %H:%M:%S')
         self._dt = dt
         self._value = value
