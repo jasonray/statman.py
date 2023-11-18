@@ -35,13 +35,14 @@ class Stopwatch():
         return self._name
 
     def start(self):
+        self.reset()
         self._start_time = self._now()
 
     def stop(self, units: str = 's', precision: int = None) -> float:
         self._stop_time = self._now()
 
         if self.history:
-            self.history.append(value=self._stop_time)
+            self.history.append(value=self.value)
 
         return self.read(units=units, precision=precision)
 
