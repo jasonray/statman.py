@@ -117,11 +117,17 @@ print(f'event took {sw.read(precision=1)}s to execute')  # event took 1.0s to ex
 ### Stopwatch: History
 ``` python
 from statman import Stopwatch
-sw = Stopwatch()
-sw.start()
+number_of_events = 1000000
 
-# do some expensive operation that you want to measure
+sw = Stopwatch(enable_history=True)
+for i in range(0, number_of_events):
+    sw.start()
+    # do some expensive operation that you want to measure
+    sw.stop()
 
-delta = sw.stop()
-print(f'event took {sw.read(precision=1)}s to execute')  # event took 1.0s to execute
+print('number of measurements:', sw.history.count())
+print('min:', sw.history.min_value())
+print('max:', sw.history.max_value())
+print('ave:', sw.history.average_value())
+print('mode:', sw.history.mode_value())
 ```
