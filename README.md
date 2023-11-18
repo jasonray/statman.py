@@ -55,6 +55,8 @@ statman=*
 * `Stopwatch(name=None, autostart=False, initial_delta=None)` => create an instance of a stopwatch.
   * If `autostart` set to true, the stopwatch will automatically start
   * If `initial_delta` is set to a value, and `read` of the stopwatch is incremented by this amount.  This can be helpful if you adding timings together.
+  * `name` is used for to string / reporting for identification of this metric.  Defaults to blank
+  * If `enable_history` is set to true, when a timing is collected (`stop` invoked), an event is collected.  This can be accessed by the `history` property to examing statistics on this stopwatch
  
 ### Start
 * `start()` => starts the stopwatch, let the timing begin!
@@ -75,6 +77,9 @@ statman=*
 
 ### Restart
 * `restart()` => `reset`s the stopwatch, then `start`s it
+
+### History
+* `history` => if `enable_history` set during stopwatch construction, the `history` property returns an instance of a history object, which can be used for examing statistics
 
 ## Examples
 
@@ -97,8 +102,19 @@ Statman.stopwatch('stopwatch-name').read()
 print(f'event took {Statman.stopwatch('stopwatch-name').read(precision=1)}s to execute')  # event took 1.0s to execute
 ```
 
-
 ### Stopwatch: Direct Usage (no registry)
+``` python
+from statman import Stopwatch
+sw = Stopwatch()
+sw.start()
+
+# do some expensive operation that you want to measure
+
+delta = sw.stop()
+print(f'event took {sw.read(precision=1)}s to execute')  # event took 1.0s to execute
+```
+
+### Stopwatch: History
 ``` python
 from statman import Stopwatch
 sw = Stopwatch()
