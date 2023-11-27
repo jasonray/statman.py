@@ -187,6 +187,18 @@ class TestStopwatch(unittest.TestCase):
         stopwatch.reset()
         self.assertIsNone(stopwatch.read())
 
+    def test_reset_then_start_stop(self):
+        test_time_s = 0.250
+        stopwatch = Stopwatch(name='sw')
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        stopwatch.reset()
+        stopwatch.start()
+        time.sleep(test_time_s)
+        stopwatch.stop()
+        self.assertAlmostEqual(stopwatch.read() , test_time_s, delta=self._accepted_variance )
+
     def test_stopwatch_history_off_by_default(self):
         test_time_s = 0.250
         stopwatch = Stopwatch(name='sw')
