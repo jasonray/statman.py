@@ -30,29 +30,47 @@ class History():
     def values(self):
         return [event.value for event in self.events()]
 
-    def max_value(self):
-        return reduce(lambda x, y: x if x > y else y, self.values())
+    def max_value(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = reduce(lambda x, y: x if x > y else y, self.values())
+        return round(result, precision)
 
-    def min_value(self):
-        return reduce(lambda x, y: x if x < y else y, self.values())
+    def min_value(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = reduce(lambda x, y: x if x < y else y, self.values())
+        return round(result, precision)
 
-    def tota(self):
-        return self.sum_value()
+    def tota(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = self.sum_value()
+        return round(result, precision)
 
-    def sum_value(self):
-        return reduce(lambda x, y: x + y, self.values())
+    def sum_value(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = reduce(lambda x, y: x + y, self.values())
+        return round(result, precision)
 
-    def average_value(self):
-        # return self.sum_value() / self.count()
-        return statistics.fmean(self.values())
+    def average_value(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = statistics.fmean(self.values())
+        return round(result, precision)
 
-    def median_value(self):
-        # return self.sum_value() / self.count()
-        return statistics.median(self.values())
+    def median_value(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = statistics.median(self.values())
+        return round(result, precision)
 
-    def mode_value(self):
-        # return self.sum_value() / self.count()
-        return statistics.mode(self.values())
+    def mode_value(self, precision=0):
+        if self.count() == 0:
+            return None
+        result = statistics.mode(self.values())
+        return round(result, precision)
 
 
 class Event():
