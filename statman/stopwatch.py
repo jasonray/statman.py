@@ -32,7 +32,7 @@ class Stopwatch():
             buffer += self._read_units
 
         if self.history:
-            buffer += self.history.report()
+            buffer += ' ' + self.history.report()
         return buffer
 
     def print(self):
