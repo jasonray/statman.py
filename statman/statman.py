@@ -1,5 +1,6 @@
 from .stopwatch import Stopwatch
 from .gauge import Gauge
+from .calculation import Calculation
 
 _registry = {}
 
@@ -44,6 +45,19 @@ class Statman():
             Statman.register(name, g)
 
         return g
+
+    @staticmethod
+    def calculation(name=None, function=None) -> Calculation:
+        ''' Returns a numeric calculation instance.  If there is a registered calculation with this name, return it.  If there is no registered calculation with this name, create a new instance, register it, and return it. '''
+        c = Statman.get(name)
+
+        if not c:
+            c = Calculation(name=name, function=function)
+
+        if not name is None:
+            Statman.register(name, c)
+
+        return c
 
     @staticmethod
     def register(name, metric):
