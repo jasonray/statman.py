@@ -175,3 +175,18 @@ Statman.gauge('number-of-messages_processed').increment()
 
 print('number-of-messages_processed:', Statman.gauge('number-of-messages_processed').value)
 ```
+
+### Calculation via Statman Registry
+``` python
+from statman import Statman
+
+Statman.calculation('messages-per-second').function = lambda: (Statman.gauge('messages-processed').value / Statman.stopwatch('sw').value)
+Statman.stopwatch('time-to-process-batch').start()
+
+# code to process batch, incrementing each time message is handles
+Statman.gauge('messages-processed').increment()
+
+Statman.stopwatch('sw').stop()
+
+print(Statman.calculation('messages-per-second').value)
+```
