@@ -31,8 +31,18 @@ class Stopwatch():
         if elapsed:
             buffer += self._read_units
 
+        if self.history:
+            buffer += self.history.report()
+        return buffer
+
     def print(self):
-        print(str(self))
+        self.report(output_stdout=True)
+
+    def report(self, output_stdout: bool = False):
+        output = str(self)
+        if output_stdout:
+            print(output)
+        return output
 
     @property
     def name(self) -> str:
