@@ -46,6 +46,6 @@ class Calculation():
     def function(self):
         return self._function
 
-    @value.setter
+    @function.setter
     def function(self, function):
         self._function = function
