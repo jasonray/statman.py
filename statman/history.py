@@ -7,9 +7,7 @@ class History():
     _data = []
 
     def __init__(self):
-        print('pre-init count:', self.count())
         self._data = []
-        print('post-init count:', self.count())
 
     def __str__(self):
         pass
