@@ -56,3 +56,12 @@ class Statman():
         if name:
             metric = _registry.get(name)
         return metric
+
+    @staticmethod
+    def report(output_stdout: bool = False):
+        output = []
+        line_delimiter = '\n'
+        for metric in _registry:
+            output.append(_registry.get(metric).report(output_stdout=output_stdout))
+        print('report:')
+        print(line_delimiter.join(output))
