@@ -173,7 +173,5 @@ class TestStatman(unittest.TestCase):
         message = Statman.report(output_stdout=False, log_method=self.log)
         print('raw message:', message)
 
-        1 / 0
-
     def log(self, message):
         print('XX ' + message)
