@@ -11,6 +11,8 @@ Statman is a collection of metric collectors to embed within your python applica
 `Statman` => registry
 `Metric` => set of classes that can perform metric collection
 `Stopwatch` => a metric class responsible for tracking time delta
+`Gauge` => a metric class responsible for providing a single value
+`Calculation` => a metric class responsible for performing calculations
 
 # Install it!
 
@@ -49,7 +51,7 @@ statman=*
 
 ## Stopwatch
 
-`Statman-Stopwatch` is for timing operations within your system.  Suppose that you are trying to track down where the system is slow.  Put a stopwatch around certain critical areas, time those operations, and compare.
+`Stopwatch` is for timing operations within your system.  Suppose that you are trying to track down where the system is slow.  Put a stopwatch around certain critical areas, time those operations, and compare.
 
 ### Constructor
 * `Stopwatch(name=None, autostart=False, initial_delta=None)` => create an instance of a stopwatch.
@@ -81,6 +83,36 @@ statman=*
 ### History
 * `history` => if `enable_history` set during stopwatch construction, the `history` property returns an instance of a history object, which can be used for examing statistics
 
+## Gauge
+
+A gauge is an instantaneous measurement of a value.  Suppose that you are interested in counting the number of messages that have been processed.  A gauge can be used to count events and produce a value.
+
+### Constructor
+* `Gauge(name=None, value: float = 0)` => create an instance of a gauge
+  * If `value` is provided, this will be used as the initial value of the gauge
+
+### Value
+* `value()` => get / set the current value of the gauge
+
+### Increment / Decrement
+* `increment(amount: int = 1)` => adds to the current value
+* `decrement(amount: int = 1)` => subtracts from the current value
+
+## Calculation
+
+### Constructor
+* `Calculation(name=None, function=None)` => creates a new instance of a calculation metric
+
+#### Function
+* `function` => set the function used the calculation.
+  * The function is to be a parameterless function that returns a numeric value.  
+  * The function can internally reference other items, such as other Statman metrics or access to other resources.  
+  * The function can be a named or lambda function.
+
+#### Value / Read
+* `read(precision: int = None)` => execute the function, and returns the value rounded based on specified precision
+* `value(self)` => execute the function, and returns the value
+
 ## Examples
 
 ### Maually Register Metric
@@ -91,7 +123,7 @@ Statman.register('expensive-operation-timing',Stopwatch())
 stopwatch = Statman.get('expensive-operation-timing')
 ```
 
-### Stopwatch via Registry
+### Stopwatch via Statman Registry
 ``` python
 from statman import Statman
 
@@ -130,4 +162,16 @@ print('min:', sw.history.min_value())
 print('max:', sw.history.max_value())
 print('ave:', sw.history.average_value())
 print('mode:', sw.history.mode_value())
+```
+
+### Gauge using increment via Statman Registry
+``` python
+from statman import Statman
+Statman.gauge('number-of-messages-processed')
+
+# in area where something interesting occurs, update gauge
+# update can occur using .increment() or .value=
+Statman.gauge('number-of-messages_processed').increment()
+
+print('number-of-messages_processed:', Statman.gauge('number-of-messages_processed').value)
 ```
