@@ -170,4 +170,8 @@ class TestStatman(unittest.TestCase):
         Statman.stopwatch('sw1').stop()
         Statman.stopwatch('sw4').stop()
 
-        Statman.report(output_stdout=True)
+        message = Statman.report(output_stdout=False, log_method=self.log)
+        print('raw message:', message)
+
+    def log(self, message):
+        print('XX ' + message)

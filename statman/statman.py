@@ -58,11 +58,21 @@ class Statman():
         return metric
 
     @staticmethod
-    def report(output_stdout: bool = False):
+    def report(output_stdout: bool = False, log_method=None):
         output = []
+        report_header = 'statman metric report:'
         line_delimiter = '\n'
         prefix = '- '
+
+        output.append(report_header)
         for metric in _registry:
             output.append(prefix + _registry.get(metric).report(output_stdout=False))
-        print('statman metric report:')
-        print(line_delimiter.join(output))
+
+        for line in output:
+            if output_stdout:
+                print(line)
+
+            if log_method:
+                log_method(line)
+
+        return line_delimiter.join(output)
