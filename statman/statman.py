@@ -20,12 +20,12 @@ class Statman():
         return len(_registry.keys())
 
     @staticmethod
-    def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None) -> Stopwatch:
+    def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False) -> Stopwatch:
         ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
         sw = Statman.get(name)
 
         if not sw:
-            sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta)
+            sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history)
 
         if not name is None:
             Statman.register(name, sw)
