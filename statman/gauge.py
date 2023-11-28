@@ -12,6 +12,15 @@ class Gauge():
             name = '(Gauge)'
         return f'[{name} => value={self.value}]'
 
+    def print(self):
+        self.report(output_stdout=True)
+
+    def report(self, output_stdout: bool = False):
+        output = str(self)
+        if output_stdout:
+            print(output)
+        return output
+
     @property
     def name(self) -> str:
         return self._name
