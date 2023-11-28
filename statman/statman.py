@@ -62,6 +62,5 @@ class Statman():
         output = []
         line_delimiter = '\n'
         for metric in _registry:
-            output.append(_registry.get(metric).report(output_stdout=output_stdout))
-        print('report:')
+            output.append(prefix + _registry.get(metric).report(output_stdout=False))
         print(line_delimiter.join(output))
