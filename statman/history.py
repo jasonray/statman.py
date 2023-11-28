@@ -76,7 +76,7 @@ class History():
     def report(self):
         part_delimiter = '; '
         parts = []
-        parts.append(self.report_part(label='count', value=self.count(), unit='s'))
+        parts.append(self.report_part(label='count', value=self.count(), unit=None))
         parts.append(self.report_part(label='avg', value=self.average_value(precision=3), unit='s'))
         parts.append(self.report_part(label='min', value=self.min_value(precision=3), unit='s'))
         parts.append(self.report_part(label='max', value=self.max_value(precision=3), unit='s'))
@@ -86,7 +86,7 @@ class History():
     def report_part(self, label: str, value: float, unit: str):
         buffer = f'{label}='
         buffer += str(value)
-        if value:
+        if value and unit:
             buffer += unit
         return buffer
 
