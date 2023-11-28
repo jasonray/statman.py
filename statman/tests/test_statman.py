@@ -175,3 +175,27 @@ class TestStatman(unittest.TestCase):
 
     def log(self, message):
         print('XX ' + message)
+
+    def test_calculation_metric(self):
+        Statman.stopwatch('sw').start()
+        time.sleep(0.5)
+        Statman.stopwatch('sw').stop()
+
+        Statman.gauge('messages_processed').value = 100
+
+        Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
+        Statman.calculation('messages_per_millisecond').function = lambda: (Statman.get('messages_per_second').value / 1000)
+
+        self.assertAlmostEqual(Statman.calculation('messages_per_second').value, 200, delta=5)
+        self.assertAlmostEqual(Statman.calculation('messages_per_millisecond').value, 0.2, places=1)
+
+    def test_calculation_metric_invalid_functions(self):
+        Statman.stopwatch('sw')
+
+        Statman.gauge('messages_processed').value = 100
+
+        Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
+        Statman.calculation('messages_per_millisecond').function = lambda: (Statman.get('messages_per_second').value / 1000)
+
+        self.assertIsNone(Statman.calculation('messages_per_second').value)
+        self.assertIsNone(Statman.calculation('messages_per_millisecond').value)
