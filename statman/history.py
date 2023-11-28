@@ -72,6 +72,26 @@ class History():
         result = statistics.mode(self.values())
         return round(result, precision)
 
+    def print(self):
+        print(self.report())
+
+    def report(self):
+        part_delimiter = '; '
+        parts = []
+        parts.append(self.report_part(label='count', value=self.count(), unit='s'))
+        parts.append(self.report_part(label='avg', value=self.average_value(precision=3), unit='s'))
+        parts.append(self.report_part(label='min', value=self.min_value(precision=3), unit='s'))
+        parts.append(self.report_part(label='max', value=self.max_value(precision=3), unit='s'))
+        buffer = f'[{ part_delimiter.join(parts) }]'
+        return buffer
+
+    def report_part(self, label: str, value: float, unit: str):
+        buffer = f'{label}='
+        buffer += str(value)
+        if value:
+            buffer += unit
+        return buffer
+
 
 class Event():
     _dt = None
