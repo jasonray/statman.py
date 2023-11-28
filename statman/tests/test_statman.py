@@ -153,3 +153,21 @@ class TestStatman(unittest.TestCase):
         self.assertEqual(Statman.gauge('g1').value, 1)
         self.assertEqual(Statman.gauge('g2').value, 3)
         self.assertEqual(Statman.gauge('g3').value, 30)
+
+    def test_report(self):
+        Statman.gauge('g1').value = 1
+        Statman.gauge('g2').value = 2
+        Statman.gauge('g3')
+        Statman.gauge('g4').increment()
+        Statman.stopwatch('sw1', autostart=True, enable_history=True)
+        time.sleep(1)
+        Statman.stopwatch('sw1').stop()
+        Statman.stopwatch('sw1', autostart=True, enable_history=True)
+        Statman.stopwatch('sw2', autostart=True, enable_history=True)
+        Statman.stopwatch('sw3', autostart=False, enable_history=True)
+        Statman.stopwatch('sw4', autostart=True, enable_history=True)
+        time.sleep(2)
+        Statman.stopwatch('sw1').stop()
+        Statman.stopwatch('sw4').stop()
+
+        Statman.report(output_stdout=True)
