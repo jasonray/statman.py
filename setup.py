@@ -7,7 +7,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(name='statman',
-      version='1.2.0',
+      version='1.3.0',
       author='Mighty Pulpo',
       author_email='jayray.net@gmail.com',
       description='Collection of metrics collection tools, including a simple stopwatch',
@@ -20,4 +20,4 @@ setup(name='statman',
           'Operating System :: OS Independent',
       ],
       python_requires='>=3.6',
-      keywords='stats, metrics, stopwatch, timing')
+      keywords='stats, metrics, stopwatch, timing, performance, monitoring'
