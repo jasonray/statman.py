@@ -183,8 +183,9 @@ class TestStatman(unittest.TestCase):
 
         Statman.gauge('messages_processed').value = 100
 
-        Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
-        Statman.calculation('messages_per_millisecond').function = lambda: (Statman.get('messages_per_second').value / 1000)
+        Statman.calculation(
+            'messages_per_second').calculation_function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
+        Statman.calculation('messages_per_millisecond').calculation_function = lambda: (Statman.get('messages_per_second').value / 1000)
 
         self.assertAlmostEqual(Statman.calculation('messages_per_second').value, 200, delta=5)
         self.assertAlmostEqual(Statman.calculation('messages_per_millisecond').value, 0.2, places=1)
@@ -194,13 +195,15 @@ class TestStatman(unittest.TestCase):
 
         Statman.gauge('messages_processed').value = 100
 
-        Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
-        Statman.calculation('messages_per_millisecond').function = lambda: (Statman.get('messages_per_second').value / 1000)
+        Statman.calculation(
+            'messages_per_second').calculation_function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
+        Statman.calculation('messages_per_millisecond').calculation_function = lambda: (Statman.get('messages_per_second').value / 1000)
 
         self.assertIsNone(Statman.calculation('messages_per_second').value)
         self.assertIsNone(Statman.calculation('messages_per_millisecond').value)
 
     def test_mutated_registry_during_reporting(self):
         Statman.stopwatch('sw')
-        Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
+        Statman.calculation(
+            'messages_per_second').calculation_function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
         Statman.report(output_stdout=True)

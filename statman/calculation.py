@@ -29,7 +29,7 @@ class Calculation():
 
     def read(self, precision: int = None) -> float:
         try:
-            result = self.function()
+            result = self.calculation_function()
         except Exception as e:
             print(f'failed to execute calculation [{self.name}][{e}]')
             return None
@@ -44,9 +44,9 @@ class Calculation():
         return self.read()
 
     @property
-    def function(self):
+    def calculation_function(self):
         return self._function
 
-    @function.setter
-    def function(self, function):
+    @calculation_function.setter
+    def calculation_function(self, function):
         self._function = function
