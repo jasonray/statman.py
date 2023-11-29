@@ -199,3 +199,9 @@ class TestStatman(unittest.TestCase):
 
         self.assertIsNone(Statman.calculation('messages_per_second').value)
         self.assertIsNone(Statman.calculation('messages_per_millisecond').value)
+
+    def test_mutated_registry_during_reporting(self):
+        Statman.stopwatch('sw')
+        Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
+        Statman.report(output_stdout=True)
+
