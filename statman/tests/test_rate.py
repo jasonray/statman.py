@@ -23,13 +23,20 @@ class TestRate(unittest.TestCase):
         messages_per_second = Rate(name='messages_per_second', numerator_metric_name='messages_processed', denominator_metric_name='sw')
         self.assertAlmostEqual(messages_per_second.value, 200, delta=5)
 
-    def test_rate_report(self):
+    def test_rate_via_statman(self):
         Statman.stopwatch('sw').start()
         time.sleep(0.5)
         Statman.stopwatch('sw').stop()
 
         Statman.gauge('messages_processed').value = 100
 
-        messages_per_second = Rate(name='messages_per_second', numerator_metric_name='messages_processed', denominator_metric_name='sw')
+        Statman.rate(name='messages_per_second', numerator_metric_name='messages_processed', denominator_metric_name='sw')
+        self.assertAlmostEqual(Statman.rate('messages_per_second').value, 200, delta=5)
 
-        messages_per_second.report(output_stdout=True)
+    # def test_rate_report(self):
+    #     Statman.stopwatch('sw').start()
+    #     time.sleep(0.5)
+    #     Statman.stopwatch('sw').stop()
+    #     Statman.gauge('messages_processed').value = 100
+    #     messages_per_second = Rate(name='messages_per_second', numerator_metric_name='messages_processed', denominator_metric_name='sw')
+    #     messages_per_second.report(output_stdout=True)
