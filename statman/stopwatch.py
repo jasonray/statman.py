@@ -101,10 +101,10 @@ class Stopwatch():
         return self._history
 
     @property
-    def value(self, units: str = 's', precision: int = None) -> float:
+    def value(self) -> float:
         value = None
         if self._stop_time:
-            value = self.read(units=units, precision=precision)
+            value = self.read()
         else:
             value = None
         return value
