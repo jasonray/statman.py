@@ -29,7 +29,8 @@ class Calculation():
 
     def read(self, precision: int = None) -> float:
         try:
-            result = self.calculation_function()
+            f = self.calculation_function
+            result = f()
         except Exception as e:
             print(f'failed to execute calculation [{self.name}][{e}]')
             return None
