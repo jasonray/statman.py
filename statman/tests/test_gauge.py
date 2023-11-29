@@ -115,7 +115,7 @@ class TestGauge(unittest.TestCase):
     def test_to_string(self):
         gauge = Gauge('g')
         gauge.value = 5
-        expected = '[g => value=5]'
+        expected = '[g => 5]'
         self.assertEqual(str(gauge), expected)
 
     def test_multiple_gauges(self):

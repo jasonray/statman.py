@@ -1,29 +1,12 @@
-class Gauge():
-    _name = None
+from .metric import Metric
+
+
+class Gauge(Metric):
     _value = None
 
     def __init__(self, name=None, value: float = 0):
-        self._name = name
+        super().__init__(name=name)
         self.value = value
-
-    def __str__(self):
-        name = self.name
-        if not name:
-            name = '(Gauge)'
-        return f'[{name} => value={self.value}]'
-
-    def print(self):
-        self.report(output_stdout=True)
-
-    def report(self, output_stdout: bool = False):
-        output = str(self)
-        if output_stdout:
-            print(output)
-        return output
-
-    @property
-    def name(self) -> str:
-        return self._name
 
     @property
     def value(self) -> float:
