@@ -8,11 +8,11 @@
 
 Statman is a collection of metric collectors to embed within your python application.  It includes a registry to easily access your metrics.
 
-`Statman` => registry
-`Metric` => set of classes that can perform metric collection
-`Stopwatch` => a metric class responsible for tracking time delta
-`Gauge` => a metric class responsible for providing a single value
-`Calculation` => a metric class responsible for performing calculations
+`Statman` => registry  
+`Metric` => set of classes that can perform metric collection  
+`Stopwatch` => a metric class responsible for tracking time delta  
+`Gauge` => a metric class responsible for providing a single value  
+`Calculation` => a metric class responsible for performing calculations  
 `Rate` => a specialized calculation metric which calculates x/y rate
 
 # Install it!
