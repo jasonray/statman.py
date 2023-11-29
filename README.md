@@ -13,6 +13,7 @@ Statman is a collection of metric collectors to embed within your python applica
 `Stopwatch` => a metric class responsible for tracking time delta
 `Gauge` => a metric class responsible for providing a single value
 `Calculation` => a metric class responsible for performing calculations
+`Rate` => a specialized calculation metric which calculates x/y rate
 
 # Install it!
 
@@ -113,6 +114,13 @@ A gauge is an instantaneous measurement of a value.  Suppose that you are intere
 * `read(precision: int = None)` => execute the function, and returns the value rounded based on specified precision
 * `value(self)` => execute the function, and returns the value
 
+## Rate
+
+### Constructor
+* `Rate(name=None, numerator_metric_name=None, denominator_metric_name=None)` => creates a new instance of a rate metric
+  * The `Rate` metric extends teh `Calculation` metric, where the function is numerator/denominator
+  * The `numerator_metric_name` and `denominator_metric_name` refer to other metrics within the Statman registry
+
 ## Examples
 
 ### Maually Register Metric
@@ -189,4 +197,18 @@ Statman.gauge('messages-processed').increment()
 Statman.stopwatch('sw').stop()
 
 print(Statman.calculation('messages-per-second').value)
+```
+
+### Rate via Statman Registry
+``` python
+from statman import Statman
+
+Statman.stopwatch('sw').start()
+time.sleep(0.5)
+Statman.stopwatch('sw').stop()
+
+Statman.gauge('messages_processed').value = 100
+
+Statman.rate(name='messages_per_second', numerator_metric_name='messages_processed', denominator_metric_name='sw')
+print(Statman.rate('messages_per_second').value)
 ```
