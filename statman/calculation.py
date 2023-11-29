@@ -11,7 +11,7 @@ class Calculation():
         if not name:
             name = '(Calculation)'
         value = self.read(precision=0)
-        buffer = f'[{name} => {value}'
+        buffer = f'[{name} => {value}]'
         return buffer
 
     def print(self):
@@ -29,13 +29,14 @@ class Calculation():
 
     def read(self, precision: int = None) -> float:
         try:
-            result = self._function()
+            result = self.function()
         except Exception as e:
             print(f'failed to execute calculation [{self.name}][{e}]')
             return None
 
         if precision:
             result = round(result, precision)
+
         return result
 
     @property
