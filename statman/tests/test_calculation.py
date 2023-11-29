@@ -11,7 +11,7 @@ class TestCalculation(unittest.TestCase):
         calc = Calculation()
         self.assertIsNotNone(calc)
         self.assertEqual(calc.name, None)
-        self.assertEqual(calc.function, None)
+        self.assertEqual(calc.calculation_function, None)
 
     def test_create_with_name(self):
         f = lambda: 1
