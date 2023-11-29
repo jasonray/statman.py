@@ -93,7 +93,7 @@ class Statman():
         r = Statman.get(name)
 
         if not r:
-            r = Rate(name=None, numerator_metric_name=None, denominator_metric_name=None)
+            r = Rate(name=None, numerator_metric_name=numerator_metric_name, denominator_metric_name=denominator_metric_name)
 
         if not name is None:
             Statman.register(name, r)
