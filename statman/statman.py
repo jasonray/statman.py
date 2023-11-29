@@ -79,7 +79,7 @@ class Statman():
         prefix = '- '
 
         output.append(report_header)
-        for metric in _registry:
+        for metric in _registry.copy():
             output.append(prefix + _registry.get(metric).report(output_stdout=False))
 
         for line in output:
