@@ -20,4 +20,4 @@ setup(name='statman',
           'Operating System :: OS Independent',
       ],
       python_requires='>=3.6',
-      keywords='stats, metrics, stopwatch, timing, performance, monitoring'
+      keywords='stats, metrics, stopwatch, timing, performance, monitoring')
