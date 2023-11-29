@@ -2,8 +2,10 @@ from .stopwatch import Stopwatch
 from .gauge import Gauge
 from .calculation import Calculation
 from .rate import Rate
+from .metric import Metric
 
 _registry = {}
+
 
 class Statman():
 
@@ -16,7 +18,7 @@ class Statman():
         _registry.clear()
 
     @staticmethod
-    def count():
+    def count() -> int:
         '''Returns a count of the registered metrics.'''
         return len(_registry.keys())
 
@@ -34,7 +36,7 @@ class Statman():
         return sw
 
     @staticmethod
-    def gauge(name=None, value: float = 0) -> Gauge:
+    def gauge(name: str = None, value: float = 0) -> Gauge:
         ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
         g = Statman.get(name)
 
@@ -47,7 +49,7 @@ class Statman():
         return g
 
     @staticmethod
-    def calculation(name=None, function=None) -> Calculation:
+    def calculation(name: str = None, function=None) -> Calculation:
         ''' Returns a numeric calculation instance.  If there is a registered calculation with this name, return it.  If there is no registered calculation with this name, create a new instance, register it, and return it. '''
         c = Statman.get(name)
 
@@ -60,7 +62,7 @@ class Statman():
         return c
 
     @staticmethod
-    def rate(name=None, numerator_metric_name=None, denominator_metric_name=None) -> Rate:
+    def rate(name: str = None, numerator_metric_name: str = None, denominator_metric_name: str = None) -> Rate:
         ''' Returns a numeric rate calculation instance.  If there is a registered metric with this name, return it.  If there is no registered metric with this name, create a new instance, register it, and return it. '''
         r = Statman.get(name)
 
@@ -73,12 +75,12 @@ class Statman():
         return r
 
     @staticmethod
-    def register(name, metric):
+    def register(name: str, metric: Metric):
         '''Manually register a new metric.'''
         _registry[name] = metric
 
     @staticmethod
-    def get(name):
+    def get(name: str) -> Metric:
         metric = None
         if name:
             metric = _registry.get(name)
