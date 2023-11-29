@@ -1,6 +1,7 @@
 from .stopwatch import Stopwatch
 from .gauge import Gauge
 from .calculation import Calculation
+from .rate import Rate
 
 _registry = {}
 
