@@ -204,4 +204,3 @@ class TestStatman(unittest.TestCase):
         Statman.stopwatch('sw')
         Statman.calculation('messages_per_second').function = lambda: (Statman.gauge('messages_processed').value / Statman.stopwatch('sw').value)
         Statman.report(output_stdout=True)
-
