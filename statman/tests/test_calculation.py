@@ -4,7 +4,7 @@ from statman import Statman
 from statman.calculation import Calculation
 
 
-class TestNumericCalculation(unittest.TestCase):
+class TestCalculation(unittest.TestCase):
     _accepted_variance = 0.1
 
     def test_create(self):
