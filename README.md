@@ -118,7 +118,7 @@ A gauge is an instantaneous measurement of a value.  Suppose that you are intere
 
 ### Constructor
 * `Rate(name=None, numerator_metric_name=None, denominator_metric_name=None)` => creates a new instance of a rate metric
-  * The `Rate` metric extends teh `Calculation` metric, where the function is numerator/denominator
+  * The `Rate` metric extends the `Calculation` metric, where the function is numerator/denominator
   * The `numerator_metric_name` and `denominator_metric_name` refer to other metrics within the Statman registry
 
 ## Examples
