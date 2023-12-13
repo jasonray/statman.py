@@ -1,7 +1,7 @@
 import unittest
 from statman import Statman
-from statman.external_source import ExternalSource
 from statman.gauge import Gauge
+from statman.statman import ExternalSource
 
 
 class TestExternal(unittest.TestCase):

@@ -3,6 +3,7 @@ from .gauge import Gauge
 from .calculation import Calculation
 from .rate import Rate
 from .metric import Metric
+from is_numeric import is_numeric
 
 _registry = {}
 
@@ -20,12 +21,12 @@ class Statman():
     @staticmethod
     def count() -> int:
         '''Returns a count of the registered metrics.'''
-        return len(_registry.keys())
+        return len( Statman.metric_registry() .keys())
 
     @staticmethod
     def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False) -> Stopwatch:
         ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
-        sw = Statman.get(name)
+        sw = Statman.metric_registry().get(name)
 
         if not sw:
             sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history)
@@ -51,7 +52,7 @@ class Statman():
     @staticmethod
     def calculation(name: str = None, function=None) -> Calculation:
         ''' Returns a numeric calculation instance.  If there is a registered calculation with this name, return it.  If there is no registered calculation with this name, create a new instance, register it, and return it. '''
-        c = Statman.get(name)
+        c = Statman.metric_registry().get(name)
 
         if not c:
             c = Calculation(name=name, function=function)
@@ -64,7 +65,7 @@ class Statman():
     @staticmethod
     def rate(name: str = None, numerator_metric_name: str = None, denominator_metric_name: str = None) -> Rate:
         ''' Returns a numeric rate calculation instance.  If there is a registered metric with this name, return it.  If there is no registered metric with this name, create a new instance, register it, and return it. '''
-        r = Statman.get(name)
+        r = Statman.metric_registry().get(name)
 
         if not r:
             r = Rate(name=None, numerator_metric_name=numerator_metric_name, denominator_metric_name=denominator_metric_name)
@@ -77,14 +78,37 @@ class Statman():
     @staticmethod
     def register(name: str, metric: Metric):
         '''Manually register a new metric.'''
-        _registry[name] = metric
+        Statman.metric_registry()[name]=metric
 
     @staticmethod
     def get(name: str) -> Metric:
         metric = None
         if name:
-            metric = _registry.get(name)
+            metric = Statman.metric_registry().get(name)
         return metric
+
+    @staticmethod
+    def metric_registry() -> dict:
+        metric_registry = _registry.get('metric-registry')
+        if not metric_registry:
+            _registry['metric-registry']={}
+            metric_registry = _registry.get('metric-registry')
+        return metric_registry
+
+
+
+    @staticmethod
+    def external_source(name: str , function) -> "ExternalSource":
+        ''' Registers an external source '''
+        s = Statman.get(name)
+
+        if not s:
+            s = ExternalSource(name=name, function=function)
+
+        Statman.register(name, s)
+
+        return s
+
 
     @staticmethod
     def report(output_stdout: bool = False, log_method=None):
@@ -94,8 +118,8 @@ class Statman():
         prefix = '- '
 
         output.append(report_header)
-        for metric in _registry.copy():
-            output.append(prefix + _registry.get(metric).report(output_stdout=False))
+        for metric in Statman.metric_registry().copy():
+            output.append(prefix + Statman.get(metric).report(output_stdout=False))
 
         for line in output:
             if output_stdout:
@@ -105,3 +129,49 @@ class Statman():
                 log_method(line)
 
         return line_delimiter.join(output)
+
+
+class ExternalSource():
+    _function = None
+    _name = None
+
+    def __init__(self, name:str,  function  ):
+        self._function = function
+        self._name = name
+        self.refresh()
+
+    def refresh(self) :
+        try:
+            f = self.refresh_function
+            result = f()
+
+            if isinstance(result, dict):
+                for key in result:
+                    value = result.get(key)
+                    statman_key = f'{self._name}.{key}'
+                    if isinstance(value, int) or isinstance(value, float):
+                        print(f'setting gauge {key=} {value=} {statman_key=}')
+                        Statman.gauge(statman_key).value = value
+                    elif isinstance(value, str) and is_numeric(value):
+                        value = float(value)
+                        print(f'setting gauge {key=} {value=} {statman_key=}')
+                        Statman.gauge(statman_key).value = value
+                    else:
+                        print(f'skipping non-numeric value {key=} {value=} {statman_key=}')
+            else:
+                if isinstance(value, int) or isinstance(value, float):
+                    print(f'skipping non-dictionary, numeric {result=}')
+                else:
+                    print(f'skipping non-dictionary {result=}')
+
+        except Exception as e:
+            print(f'failed to execute refresh method [{self._name}][{e}]')
+            raise e
+
+    @property
+    def refresh_function(self):
+        return self._function
+
+    # @refresh_function.setter
+    # def refresh_function(self, function):
+    #     self._function = function
