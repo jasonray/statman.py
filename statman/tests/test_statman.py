@@ -46,6 +46,7 @@ class TestStatman(unittest.TestCase):
         time.sleep(1)
 
         sw = Statman.get('stopwatch-name')
+        Statman.report(output_stdout=True)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
 
     def test_access_stopwatch_through_registry_stopwatch(self):
