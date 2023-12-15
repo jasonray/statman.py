@@ -142,6 +142,21 @@ Statman.stopwatch('stopwatch-name').read()
 print(f'event took {Statman.stopwatch('stopwatch-name').read(precision=1)}s to execute')  # event took 1.0s to execute
 ```
 
+### Stopwatch via Statman Registry with thread safety
+Most use cases of statman are thread safe.  However, the one that is not is using stopwatch via registry.  If you want to use stopwatch via statman in a threaded env, small change.
+
+``` python
+from statman import Statman
+
+sw1 = SM.stopwatch(name='sw', thread_safe=True)
+sw1.start()
+# do some expensive operation that you want to measure
+sw1.read()
+
+print(f'event took {sw1.read(precision=1)}s to execute')  # event took 1.0s to execute
+```
+
+
 ### Stopwatch: Direct Usage (no registry)
 ``` python
 from statman import Stopwatch
