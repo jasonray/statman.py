@@ -40,7 +40,7 @@ class Statman():
             Statman.register(name, sw)
 
         return sw
-    
+
     def _stopwatch_threadsafe(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False):
         parent_sw = Statman.metric_registry().get(name)
 
@@ -53,8 +53,12 @@ class Statman():
                         Statman.register(name, parent_sw)
                         print(f'_stopwatch_threadsafe-{name}: add to registry {parent_sw=}')
 
-        child_name = f'{name}.{uuid.uuid4()}'    
-        child_sw= Stopwatch(name=child_name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history, history=parent_sw.history)
+        child_name = f'{name}.{uuid.uuid4()}'
+        child_sw = Stopwatch(name=child_name,
+                             autostart=autostart,
+                             initial_delta=initial_delta,
+                             enable_history=enable_history,
+                             history=parent_sw.history)
 
         return child_sw
 
