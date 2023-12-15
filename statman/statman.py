@@ -1,11 +1,11 @@
 import threading
 import uuid
+from is_numeric import is_numeric
 from .stopwatch import Stopwatch
 from .gauge import Gauge
 from .calculation import Calculation
 from .rate import Rate
 from .metric import Metric
-from is_numeric import is_numeric
 
 _registry = {}
 
