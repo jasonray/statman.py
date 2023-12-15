@@ -213,11 +213,10 @@ class ExternalSource():
                         Statman.gauge(statman_key).value = value
                     else:
                         print(f'skipping non-numeric value {key=} {value=} {statman_key=}')
+            elif isinstance(value, (int, float) ):
+                print(f'skipping non-dictionary, numeric {result=}')
             else:
-                if isinstance(value, int) or isinstance(value, float):
-                    print(f'skipping non-dictionary, numeric {result=}')
-                else:
-                    print(f'skipping non-dictionary, non-numeric {result=}')
+                print(f'skipping non-dictionary, non-numeric {result=}')
 
         except Exception as e:
             print(f'failed to execute refresh method [{self._name}][{e}]')
