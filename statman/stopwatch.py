@@ -10,7 +10,7 @@ class Stopwatch(Metric):
     _read_units = 'ms'
     _history = None
 
-    def __init__(self, name=None, autostart=False, initial_delta=None, enable_history=False, history:History=None):
+    def __init__(self, name=None, autostart=False, initial_delta=None, enable_history=False, history: History = None):
         super().__init__(name=name)
         self.reset()
         self._initial_delta = initial_delta
