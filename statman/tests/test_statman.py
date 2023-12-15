@@ -15,7 +15,9 @@ class TestStatman(unittest.TestCase):
     def log(self, message):
         print(f'{TestStatman} {message}')
 
+
 class TestGaugeViaStatman(TestStatman):
+
     def test_create_gauge_via_statman_package(self):
         import statman
         gauge = statman.Gauge()
@@ -56,7 +58,9 @@ class TestGaugeViaStatman(TestStatman):
         message = Statman.report(output_stdout=False, log_method=self.log)
         print('raw message:', message)
 
+
 class TestStopwatchViaStatman(TestStatman):
+
     def test_create_stopwatch_via_statman_package(self):
         import statman
         sw = statman.Stopwatch()
@@ -70,7 +74,6 @@ class TestStopwatchViaStatman(TestStatman):
         sw.start()
         time.sleep(1)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
-
 
     def test_create_stopwatch_via_statman_constructor(self):
         sw = Statman.stopwatch()
@@ -182,6 +185,7 @@ class TestStopwatchViaStatman(TestStatman):
 
 
 class TestCalculationViaStatman(TestStatman):
+
     def test_calculation_metric(self):
         Statman.stopwatch('sw').start()
         time.sleep(0.5)
