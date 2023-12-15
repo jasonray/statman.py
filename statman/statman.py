@@ -41,6 +41,7 @@ class Statman():
 
         return sw
 
+    @staticmethod
     def _stopwatch_threadsafe(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False):
         parent_sw = Statman.metric_registry().get(name)
 
