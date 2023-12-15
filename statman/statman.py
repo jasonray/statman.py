@@ -46,7 +46,8 @@ class Statman():
         parent_sw = Statman.metric_registry().get(name)
 
         if not parent_sw:
-            with threading.Lock():
+            lock = threading.Lock()
+            with lock:
                 parent_sw = Statman.metric_registry().get(name)
                 if not parent_sw:
                     parent_sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history)
