@@ -12,6 +12,58 @@ class TestStatman(unittest.TestCase):
         print('reset registry between tests')
         Statman.reset()
 
+    def log(self, message):
+        print(f'{TestStatman} {message}')
+
+class TestGaugeViaStatman(TestStatman):
+    def test_create_gauge_via_statman_package(self):
+        import statman
+        gauge = statman.Gauge()
+        gauge.value = 1
+        self.assertEqual(gauge.value, 1)
+
+    def test_access_gauge_through_registry(self):
+        g1 = Statman.gauge('g1')
+        g1.value = 1
+
+        Statman.gauge(name='g2', value=2).increment()
+
+        Statman.gauge('g3')
+        Statman.gauge('g3').value = 20
+        Statman.gauge('g3').increment(10)
+
+        self.assertEqual(Statman.gauge('g1').name, 'g1')
+        self.assertEqual(Statman.gauge('g1').value, 1)
+        self.assertEqual(Statman.gauge('g2').value, 3)
+        self.assertEqual(Statman.gauge('g3').value, 30)
+
+    def test_report(self):
+        Statman.gauge('g1').value = 1
+        Statman.gauge('g2').value = 2
+        Statman.gauge('g3')
+        Statman.gauge('g4').increment()
+        Statman.stopwatch('sw1', autostart=True, enable_history=True)
+        time.sleep(1)
+        Statman.stopwatch('sw1').stop()
+        Statman.stopwatch('sw1', autostart=True, enable_history=True)
+        Statman.stopwatch('sw2', autostart=True, enable_history=True)
+        Statman.stopwatch('sw3', autostart=False, enable_history=True)
+        Statman.stopwatch('sw4', autostart=True, enable_history=True)
+        time.sleep(2)
+        Statman.stopwatch('sw1').stop()
+        Statman.stopwatch('sw4').stop()
+
+        message = Statman.report(output_stdout=False, log_method=self.log)
+        print('raw message:', message)
+
+class TestStopwatchViaStatman(TestStatman):
+    def test_create_stopwatch_via_statman_package(self):
+        import statman
+        sw = statman.Stopwatch()
+        sw.start()
+        time.sleep(1)
+        self.assertAlmostEqual(sw.read(), 1, delta=0.1)
+
     def test_create_stopwatch_directly(self):
         from statman import Stopwatch
         sw = Stopwatch()
@@ -19,12 +71,6 @@ class TestStatman(unittest.TestCase):
         time.sleep(1)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
 
-    def test_create_stopwatch_via_statman_package(self):
-        import statman
-        sw = statman.Stopwatch()
-        sw.start()
-        time.sleep(1)
-        self.assertAlmostEqual(sw.read(), 1, delta=0.1)
 
     def test_create_stopwatch_via_statman_constructor(self):
         sw = Statman.stopwatch()
@@ -134,49 +180,8 @@ class TestStatman(unittest.TestCase):
         time.sleep(1)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
 
-    def test_create_gauge_via_statman_package(self):
-        import statman
-        gauge = statman.Gauge()
-        gauge.value = 1
-        self.assertEqual(gauge.value, 1)
 
-    def test_access_gauge_through_registry(self):
-        g1 = Statman.gauge('g1')
-        g1.value = 1
-
-        Statman.gauge(name='g2', value=2).increment()
-
-        Statman.gauge('g3')
-        Statman.gauge('g3').value = 20
-        Statman.gauge('g3').increment(10)
-
-        self.assertEqual(Statman.gauge('g1').name, 'g1')
-        self.assertEqual(Statman.gauge('g1').value, 1)
-        self.assertEqual(Statman.gauge('g2').value, 3)
-        self.assertEqual(Statman.gauge('g3').value, 30)
-
-    def test_report(self):
-        Statman.gauge('g1').value = 1
-        Statman.gauge('g2').value = 2
-        Statman.gauge('g3')
-        Statman.gauge('g4').increment()
-        Statman.stopwatch('sw1', autostart=True, enable_history=True)
-        time.sleep(1)
-        Statman.stopwatch('sw1').stop()
-        Statman.stopwatch('sw1', autostart=True, enable_history=True)
-        Statman.stopwatch('sw2', autostart=True, enable_history=True)
-        Statman.stopwatch('sw3', autostart=False, enable_history=True)
-        Statman.stopwatch('sw4', autostart=True, enable_history=True)
-        time.sleep(2)
-        Statman.stopwatch('sw1').stop()
-        Statman.stopwatch('sw4').stop()
-
-        message = Statman.report(output_stdout=False, log_method=self.log)
-        print('raw message:', message)
-
-    def log(self, message):
-        print('XX ' + message)
-
+class TestCalculationViaStatman(TestStatman):
     def test_calculation_metric(self):
         Statman.stopwatch('sw').start()
         time.sleep(0.5)
