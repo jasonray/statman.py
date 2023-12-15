@@ -213,7 +213,7 @@ class ExternalSource():
                         Statman.gauge(statman_key).value = value
                     else:
                         print(f'skipping non-numeric value {key=} {value=} {statman_key=}')
-            elif isinstance(value, (int, float) ):
+            elif isinstance(value, (int, float)):
                 print(f'skipping non-dictionary, numeric {result=}')
             else:
                 print(f'skipping non-dictionary, non-numeric {result=}')
