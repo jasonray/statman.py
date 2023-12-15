@@ -1,3 +1,5 @@
+import threading
+import uuid
 from .stopwatch import Stopwatch
 from .gauge import Gauge
 from .calculation import Calculation
@@ -24,8 +26,11 @@ class Statman():
         return len(Statman.metric_registry().keys())
 
     @staticmethod
-    def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False) -> Stopwatch:
+    def stopwatch(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False, thread_safe=False) -> Stopwatch:
         ''' Returns a stopwatch instance.  If there is a registered stopwatch with this name, return it.  If there is no registered stopwatch with this name, create a new instance, register it, and return it. '''
+        if thread_safe:
+            return Statman._stopwatch_threadsafe(name=name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history)
+
         sw = Statman.metric_registry().get(name)
 
         if not sw:
@@ -35,6 +40,23 @@ class Statman():
             Statman.register(name, sw)
 
         return sw
+    
+    def _stopwatch_threadsafe(name: str = None, autostart: bool = False, initial_delta: float = None, enable_history=False):
+        parent_sw = Statman.metric_registry().get(name)
+
+        if not parent_sw:
+            with threading.Lock():
+                parent_sw = Statman.metric_registry().get(name)
+                if not parent_sw:
+                    parent_sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history)
+                    if not name is None:
+                        Statman.register(name, parent_sw)
+                        print(f'_stopwatch_threadsafe-{name}: add to registry {parent_sw=}')
+
+        child_name = f'{name}.{uuid.uuid4()}'    
+        child_sw= Stopwatch(name=child_name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history, history=parent_sw.history)
+
+        return child_sw
 
     @staticmethod
     def gauge(name: str = None, value: float = 0) -> Gauge:

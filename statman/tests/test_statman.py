@@ -183,6 +183,39 @@ class TestStopwatchViaStatman(TestStatman):
         time.sleep(1)
         self.assertAlmostEqual(sw.read(), 1, delta=0.1)
 
+class TestStopwatchViaStatmanConcurrency(TestStatman):
+    def test_concurrent_access(self):
+        from statman import Statman as SM
+
+        sw1 = SM.stopwatch(name='sw', autostart=False, enable_history=True, thread_safe=True)
+        self.assertIsNotNone(sw1)
+        sw1.start()
+
+        time.sleep(0.5)
+
+        sw2 = SM.stopwatch(name='sw', autostart=False, enable_history=True, thread_safe=True)
+        self.assertIsNotNone(sw2)
+        sw2.start()
+
+        time.sleep(1)
+
+        sw1.stop()
+
+        time.sleep(1)
+
+        sw2.stop()
+
+
+        self.assertIsNot(sw1, sw2) 
+        print(sw1.history)
+        print(sw2.history)
+        self.assertIs(sw1.history , sw2.history)
+        self.assertAlmostEqual(sw1.value , 1.5 , places=0)
+        self.assertAlmostEqual(sw2.value , 2.0 , places=0)
+
+        self.assertEqual(sw1.history.count() , 2)
+        self.assertEqual(sw2.history.count() , 2)
+
 
 class TestCalculationViaStatman(TestStatman):
 

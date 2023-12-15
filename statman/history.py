@@ -9,8 +9,7 @@ class History():
     def __init__(self):
         self._data = []
 
-    def __str__(self):
-        pass
+    # def __str__(self):
 
     def append(self, dt: datetime = None, value: float = None) -> str:
         event = self.create_event(dt=dt, value=value)
