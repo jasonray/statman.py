@@ -50,7 +50,7 @@ class Statman():
             with lock:
                 parent_sw = Statman.metric_registry().get(name)
                 if not parent_sw:
-                    parent_sw = Stopwatch(name=name, autostart=autostart, initial_delta=initial_delta, enable_history=enable_history)
+                    parent_sw = Stopwatch(name=name, autostart=False, enable_history=enable_history)
                     if not name is None:
                         Statman.register(name, parent_sw)
                         print(f'_stopwatch_threadsafe-{name}: add to registry {parent_sw=}')

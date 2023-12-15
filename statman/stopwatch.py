@@ -1,6 +1,6 @@
 import time
-from .metric import Metric
 from statman.history import History
+from .metric import Metric
 
 
 class Stopwatch(Metric):
@@ -59,7 +59,7 @@ class Stopwatch(Metric):
         self.reset()
         self.start()
 
-    def read(self, units: str = 's', precision: int = None) -> float:
+    def read(self, precision: int = None, units: str = 's') -> float:
         delta = None
         if self._start_time:
             stop_time = None
