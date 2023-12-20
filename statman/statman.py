@@ -117,7 +117,6 @@ class Statman():
 
     @staticmethod
     def refresh_external_sources():
-        print('refresh_external_sources')
         for external_source_key in Statman.external_source_registry():
             external_source = Statman.get_external_source(external_source_key)
             external_source.refresh()
@@ -185,15 +184,18 @@ class ExternalSource():
                         value = float(value)
                         Statman.gauge(statman_key).value = value
                     else:
-                        print(f'skipping non-numeric value {key=} {value=} {statman_key=}')
+                        # print(f'skipping non-numeric value {key=} {value=} {statman_key=}')
+                        pass
             else:
                 if isinstance(value, int) or isinstance(value, float):
-                    print(f'skipping non-dictionary, numeric {result=}')
+                    # print(f'skipping non-dictionary, numeric {result=}')
+                    pass
                 else:
-                    print(f'skipping non-dictionary, non-numeric {result=}')
+                    # print(f'skipping non-dictionary, non-numeric {result=}')
+                    pass
 
         except Exception as e:
-            print(f'failed to execute refresh method [{self._name}][{e}]')
+            # print(f'failed to execute refresh method [{self._name}][{e}]')
             raise e
 
     @property
