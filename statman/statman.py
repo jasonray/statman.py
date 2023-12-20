@@ -138,7 +138,6 @@ class Statman():
 
     @staticmethod
     def report(output_stdout: bool = False, log_method=None):
-        print(f'_registry: {_registry}')
         output = []
         report_header = 'statman metric report:'
         line_delimiter = '\n'
